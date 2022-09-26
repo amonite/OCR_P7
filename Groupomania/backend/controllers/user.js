@@ -3,18 +3,28 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.signup = (req, res, next) =>{
-    bcrypt.hash(req.body.password, 10) // salt password 10 times !
-        .then(hash =>{
-            const user = new User({
-                email: req.body.email,
-                password: hash,
-                isAdmin: req.body.isAdmin
-            });
-            user.save()
-                .then(()=> res.status(201).json({message: "utilisateur créé :)"}))
-                .catch(error => res.status(400).json({error}));
-        })
+    User.findOne({email:req.body.email})
+        .then(user =>{
+            if(user){
+                return res.status(400).json({message:"cet email est déjà pris ! "});
+            }
+
+            bcrypt.hash(req.body.password, 10) // salt password 10 times !
+                .then(hash =>{
+                    const user = new User({
+                        email: req.body.email,
+                        password: hash,
+                        isAdmin: req.body.isAdmin
+                    });
+                    user.save()
+                        .then(()=> res.status(201).json({message: "utilisateur créé :)"}))
+                        .catch(error => res.status(400).json({error}));
+                })
+                .catch(error => res.status(500).json({error}));
+
+            })
         .catch(error => res.status(500).json({error}));
+    
 };
 
 

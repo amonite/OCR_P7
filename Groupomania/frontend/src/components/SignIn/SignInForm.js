@@ -51,7 +51,7 @@ function SignInForm(){
             <label htmlFor="email">Email</label>
             <br/>
             <input 
-                type="text" 
+                type="email" 
                 name="email" 
                 id="email" 
                 onChange={(e)=> setEmail(e.target.value)}
