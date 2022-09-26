@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   });
 
 
-  app.use("/api/post", postRoutes);
+  app.use("/api/posts", postRoutes);
   app.use("/api/auth", userRoutes);
 // test route get 
 // app.use("/api/stuff", (req, res, next)=>{

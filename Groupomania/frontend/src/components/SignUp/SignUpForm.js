@@ -34,7 +34,7 @@ function SignUpForm(){
 
     return(
         <div>
-            signUpForm is here :)
+            <h1>Veuillez vous enregistrer</h1>
             <form action="" onSubmit={handleSignUp} id="signUp-form">
                 <label htmlFor="email">Email</label>
                 <br/>
@@ -58,7 +58,7 @@ function SignUpForm(){
                 />
                 <div className="passwordError"></div>
                 <br/>
-                <input type="submit" value="Se connecter"></input>
+                <input type="submit" value="S'enregister"></input>
             </form>
         </div>
     )
