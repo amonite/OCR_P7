@@ -1,6 +1,7 @@
 import { useState } from "react";
 //import axios from "axios";
 
+
 function SignInForm(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -34,6 +35,7 @@ function SignInForm(){
                 
                 console.log("token : "+ res.token);
                 localStorage.setItem("mytoken", res.token);
+                localStorage.setItem("uid", res.userId);
                 console.log("utilisateur connecté :)");
                 window.location = "/";
             }

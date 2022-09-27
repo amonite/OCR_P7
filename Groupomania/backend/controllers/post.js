@@ -2,7 +2,7 @@ const Post = require("../models/Post");
 
 exports.createPost = (req, res, next) =>{
     const post = new Post({
-        posterId: req.body.posterId,
+        //posterId: req.body.posterId,
         message: req.body.message,
         // likes: 0,
         // usersLiked: [] 
