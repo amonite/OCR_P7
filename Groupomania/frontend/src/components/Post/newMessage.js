@@ -1,9 +1,14 @@
 import "./style.css";
 import {useState} from "react";
+//import {useContext} from "react";
+//import { UlogCtx } from "../appContext";
 
 function NewMessage(props){
     const isLoggedIn = props.isLoggedIn;
     const [message, setMessage] = useState("");
+    //const token = useContext(UlogCtx);
+
+    const token = JSON.parse(localStorage.getItem("mytoken"));
 
     function handleMessage(){
         //console.log({message});
@@ -13,7 +18,8 @@ function NewMessage(props){
             // withCredentials: true,
             // credentials: 'include',
             headers: {
-                "Authorization":"Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI5ZTZiZjRhYzMzYTFjZjFkYmE5MzIiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NjQyOTAyNDAsImV4cCI6MTY2NDM3NjY0MH0.F8DapCu85lnTt622omNt5XAldQB9dKbLylYllQ_5Mow",
+
+                "Authorization":"Bearer "+token,
                 "Content-Type":"application/json"
             },
             body: JSON.stringify({message})

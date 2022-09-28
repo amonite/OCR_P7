@@ -14,19 +14,19 @@ function App(){
 
     const [ulog, setUlog] = useState(null);
     useEffect(()=>{
+        
+
         function getToken(){
             if(localStorage.length !==0){
-                return localStorage.getItem("mytoken");
-                // do not forget to delete token after !!!
+                const mytoken = JSON.parse(localStorage.getItem("mytoken"))
+               return mytoken;
             }
         }
         const token = getToken();
+        
         setUlog(token);
     },[ulog]);
     
-    //setUlog(token);
-    //setUlog(getToken());
-    //console.log(getToken());
 
     return(
         <Router>
