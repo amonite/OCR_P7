@@ -1,0 +1,10 @@
+.postContainer{
+    background-color: chocolate;
+    width: 600px;
+}
+
+.post{
+    background-color: bisque;
+    width: 512px;
+    height: 200px;
+}

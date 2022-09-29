@@ -3,6 +3,8 @@
 import {useEffect} from "react";
 import {useState} from "react";
 
+import "./showPosts_style.css";
+
 function ShowPosts(){
     
     //const token = useContext(UlogCtx);
@@ -53,21 +55,28 @@ function ShowPosts(){
 
     const userLogged = isUserlogged();
 
+    const userId = localStorage.getItem("userId");
+
     return(
         <div>
-            <h1>posts</h1>
+            <h1>Messages</h1>
             {/* <div>
             {posts.map((post)=> (
                 <p>{post.message}</p>
             ))}
 
             </div> */}
+            <div className="postContainer">
             {userLogged ? (<div>{posts.slice(0).reverse().map((post)=> (
-                <div>
-                <p key={post._id}>{post.message}</p>
+                <div className="post" key={post._id}>
+                <p>{post.message}</p>
                 <p>{post._id}</p>
+                <p>{post.userId}</p>
+                {userId == post.userId ? (<div>same id</div>):(<div></div>)} 
                 </div>
-            ))}</div>):(<div>deconnecté</div>)}
+            ))}
+            </div>):(<div>deconnecté</div>)}
+            </div>
         </div>
     );
 }

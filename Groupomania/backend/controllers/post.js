@@ -3,9 +3,14 @@ const Post = require("../models/Post");
 
 exports.createPost = (req, res, next) =>{
 
+    const postObject = {...req.body};
+    delete postObject._id;
+    delete postObject.userId;
+
     const post = new Post({
-        //posterId: req.body.posterId,
-        message: req.body.message,
+        
+        //message: req.body.message,
+        ...postObject,
         userId: req.auth.userId
         // likes: 0,
         // usersLiked: [] 
@@ -40,10 +45,13 @@ exports.updatePost = (req, res, next) =>{
     //     .catch(error => res.status(400).json({error:error}));
 
     const postObject = {...req.body};
-    delete postObject._userId;
+    console.log("req.body = ", postObject);
+    //delete postObject._userId;
     Post.findOne({_id:req.params.id})
         .then((post)=>{
-            if(post._userId !== req.auth.userId){
+            if(post.userId !== req.auth.userId){
+                console.log("post.userId =",post.userId);
+                console.log("req.auth.userId =",req.auth.userId);
                 res.status(401).json({message:"not authorized ...:/"});
             }
             else{

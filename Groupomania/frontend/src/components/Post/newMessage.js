@@ -1,4 +1,4 @@
-import "./style.css";
+import "./newMessage_style.css";
 import {useState} from "react";
 //import {useContext} from "react";
 //import { UlogCtx } from "../appContext";
