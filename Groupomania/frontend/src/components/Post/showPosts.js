@@ -2,6 +2,8 @@
 //import { UlogCtx } from "../appContext";
 import {useEffect} from "react";
 import {useState} from "react";
+import {Link} from "react-router-dom";
+
 
 import "./showPosts_style.css";
 
@@ -32,7 +34,7 @@ function ShowPosts(){
         })
         .then((data)=>{
             console.log(data);
-            setPosts(data);
+            setPosts(data);  // pass the data from the response to the state (var) posts 
         })
         .catch(error => console.log("error = ", error));
     } 
@@ -57,6 +59,24 @@ function ShowPosts(){
 
     const userId = localStorage.getItem("userId");
 
+
+    function deletePost(id){
+        fetch("http://localhost:5000/api/posts/"+id,{
+            method: "DELETE",
+            headers: {
+                "Authorization":"Bearer "+token,
+                "Content-Type":"application/json"
+            }
+        })
+        .then((res)=>{
+                console.log(res.message)
+                window.location.reload(true);
+
+        })
+        .catch(error => console.log("error delete = ", error))
+
+    }
+
     return(
         <div>
             <h1>Messages</h1>
@@ -70,9 +90,16 @@ function ShowPosts(){
             {userLogged ? (<div>{posts.slice(0).reverse().map((post)=> (
                 <div className="post" key={post._id}>
                 <p>{post.message}</p>
-                <p>{post._id}</p>
-                <p>{post.userId}</p>
-                {userId == post.userId ? (<div>same id</div>):(<div></div>)} 
+                <p>identifiant du message :{post._id}</p>
+                <p>identifiant du posteur :{post.userId}</p>
+                {userId == post.userId ? 
+                    (<div>
+                        <Link to={`/editPost/${post._id}`}>Editer</Link>
+                        <button type="button" onClick={()=> deletePost(post._id)}>Supprimer</button>
+
+                    </div>)
+                    :
+                    (<div></div>)} 
                 </div>
             ))}
             </div>):(<div>deconnecté</div>)}

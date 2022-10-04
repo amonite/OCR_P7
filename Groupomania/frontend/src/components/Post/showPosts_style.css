@@ -1,10 +1,17 @@
 .postContainer{
     background-color: chocolate;
     width: 600px;
+    display: flex;
+    justify-content: center;
 }
 
 .post{
     background-color: bisque;
     width: 512px;
     height: 200px;
+    border-radius: 18px;
+}
+
+.post p{
+    margin-left: 18px;
 }

@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn/signIn";
 import SignUp from './pages/SignUp/signUp';
 import Error from './components/Error/error';
 import Header from './components/Header/header';
+import EditPost from "./components/EditPost/editPost";
 
 
 function App(){
@@ -18,7 +19,8 @@ function App(){
 
         function getToken(){
             if(localStorage.length !==0){
-                const mytoken = JSON.parse(localStorage.getItem("mytoken"))
+                //const mytoken = JSON.parse(localStorage.getItem("mytoken"))
+               const mytoken = "";
                return mytoken;
             }
         }
@@ -36,6 +38,7 @@ function App(){
             <Route path="/" element={<Home />}></Route>
             <Route path="/signIn" element={<SignIn />}></Route>
             <Route path="/signUp" element={<SignUp />}></Route>
+            <Route path="/editPost/:id" element={<EditPost />}></Route>
             <Route path="*" element={<Error />}></Route>
             </Routes>
         </UlogCtx.Provider>

@@ -1,5 +1,5 @@
 const Post = require("../models/Post");
-//const { post } = require("../routes/post");
+
 
 exports.createPost = (req, res, next) =>{
 
@@ -16,17 +16,7 @@ exports.createPost = (req, res, next) =>{
         // usersLiked: [] 
     });
 
-    // const postObject = JSON.parse(req.body.post);
-    // delete postObject._id;
-    // delete postObject._userId;
-
-    // const post = new Post(
-    //     {
-    //         ...postObject,
-    //         userId:req.auth.userId
-        
-    //     }
-    // );
+    
 
     post.save()
         .then(()=> res.status(201).json({message: "post created successfuly :)"}))
@@ -45,7 +35,7 @@ exports.updatePost = (req, res, next) =>{
     //     .catch(error => res.status(400).json({error:error}));
 
     const postObject = {...req.body};
-    console.log("req.body = ", postObject);
+    //console.log("req.body = ", postObject);
     //delete postObject._userId;
     Post.findOne({_id:req.params.id})
         .then((post)=>{

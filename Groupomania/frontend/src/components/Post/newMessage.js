@@ -25,10 +25,14 @@ function NewMessage(props){
             body: JSON.stringify({message})
         })
         .then(jsonResponse => jsonResponse.json())
-        .then((res)=>{console.log(res.message)})
+        .then((res)=>{
+            console.log(res.message)
+            window.location = "/";
+        })
         .catch(error => console.log("error = ", error));
 
     }
+
     if(isLoggedIn){
         return(
             <div>
