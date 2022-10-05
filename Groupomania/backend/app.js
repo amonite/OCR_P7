@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 //const Post = require('./models/Post');
 const postRoutes = require("./routes/post");
 const userRoutes = require("./routes/user");
+const path = require("path");
 const dotenv = require("dotenv");
 const app = express();
 
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 
   app.use("/api/posts", postRoutes);
   app.use("/api/auth", userRoutes);
+  app.use("/images", express.static(path.join(__dirname, 'images')));
 // test route get 
 // app.use("/api/stuff", (req, res, next)=>{
 //     const stuff = [

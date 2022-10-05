@@ -4,9 +4,11 @@ const router = express.Router();
 //const Post = require('../models/Post');
 
 const auth = require("../middleware/auth");
+const multer = require("../middleware/multer-config");
+
 const postCtrl = require("../controllers/post");
 
-router.post("/", auth, postCtrl.createPost);
+router.post("/", auth, multer, postCtrl.createPost);
 router.post("/:id/like", postCtrl.likePost);
 
 router.get("/", auth, postCtrl.getAllPosts);

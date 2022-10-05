@@ -1,9 +1,11 @@
 const Post = require("../models/Post");
-
+const fs = require('fs');
 
 exports.createPost = (req, res, next) =>{
-
-    const postObject = {...req.body};
+    console.log("req body =",req.body.post);
+    const postObject = JSON.parse(req.body.post);
+    //const postObject = {...req.body};
+    console.log("postObject = ",postObject);
     delete postObject._id;
     delete postObject.userId;
 
@@ -11,7 +13,9 @@ exports.createPost = (req, res, next) =>{
         
         //message: req.body.message,
         ...postObject,
-        userId: req.auth.userId
+        userId: req.auth.userId,
+        //imageUrl: req.body.imageUrl 
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         // likes: 0,
         // usersLiked: [] 
     });
