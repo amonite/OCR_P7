@@ -1,7 +1,7 @@
 import "./newMessage_style.css";
 import { useState } from "react";
-import { useRef } from "react";
-import { useForm } from "react-hook-form";
+//import { useRef } from "react";
+//import { useForm } from "react-hook-form";
 //import {useContext} from "react";
 //import { UlogCtx } from "../appContext";
 
@@ -126,7 +126,7 @@ function NewMessage(props){
                             onChange={(e)=>{
                                 console.log("target = ", e.target.files[0]);
                                 setImg(e.target.files[0]);
-                                setTimeout(function(){console.log("img = ", img)}, 1000); 
+                                //setTimeout(function(){console.log("img = ", img)}, 1000); 
                             }}
                             ></input>
                         

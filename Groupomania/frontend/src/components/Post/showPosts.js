@@ -77,6 +77,17 @@ function ShowPosts(){
 
     }
 
+    function showImages(){
+        for(let i=0;i<posts.length;i++){
+            if(posts[i].imageUrl !==""){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
     return(
         <div>
             <h1>Messages</h1>
@@ -92,7 +103,9 @@ function ShowPosts(){
                 <p>{post.message}</p>
                 <p>identifiant du message :{post._id}</p>
                 <p>identifiant du posteur :{post.userId}</p>
-                {userId == post.userId ? 
+                {showImages() ? (<img src={post.imageUrl}></img>):(<div></div>)}
+                {/* <img src={post.imageUrl} alt="" width="512" height="384"></img> */}
+                {userId === post.userId ? 
                     (<div>
                         <Link to={`/editPost/${post._id}`}>Editer</Link>
                         <button type="button" onClick={()=> deletePost(post._id)}>Supprimer</button>
