@@ -100,11 +100,12 @@ function ShowPosts(){
             <div className="postContainer">
             {userLogged ? (<div>{posts.slice(0).reverse().map((post)=> (
                 <div className="post" key={post._id}>
+                
+                {showImages() ? (<img className="post_images"src={post.imageUrl} alt=""></img>):(<div></div>)}
                 <p>{post.message}</p>
-                <p>identifiant du message :{post._id}</p>
-                <p>identifiant du posteur :{post.userId}</p>
-                {showImages() ? (<img src={post.imageUrl}></img>):(<div></div>)}
-                {/* <img src={post.imageUrl} alt="" width="512" height="384"></img> */}
+                {/* <p>identifiant du message :{post._id}</p>
+                <p>identifiant du posteur :{post.userId}</p> */}
+
                 {userId === post.userId ? 
                     (<div>
                         <Link to={`/editPost/${post._id}`}>Editer</Link>

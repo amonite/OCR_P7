@@ -2,29 +2,52 @@ const Post = require("../models/Post");
 const fs = require('fs');
 
 exports.createPost = (req, res, next) =>{
-    console.log("req body =",req.body.post);
-    const postObject = JSON.parse(req.body.post);
-    //const postObject = {...req.body};
-    console.log("postObject = ",postObject);
-    delete postObject._id;
-    delete postObject.userId;
-
-    const post = new Post({
+    const postObject = req.file ? {
         
-        //message: req.body.message,
-        ...postObject,
-        userId: req.auth.userId,
-        //imageUrl: req.body.imageUrl 
+        ...JSON.parse(req.body.post),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        // likes: 0,
-        // usersLiked: [] 
-    });
-
+    } : {...JSON.parse(req.body.post)}//{ ...req.body};
+    // const recbody = {...req.body}
+    // const recpost = {...recbody.post};
+    // console.log("reqbody =", recbody);
+    // console.log("reqpost = ",recpost.message);
+    if(typeof postObject.imageUrl !== 'undefined'){
+        console.log("postObj.imageUrl = ",postObject.imageUrl);
+        delete postObject._id;
+        delete postObject.userId;
+        
+        const post = new Post({
+        
+            ...postObject,
+            userId: req.auth.userId,
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+            // likes: 0,
+            // usersLiked: [] 
+        });
+        
+        post.save()
+            .then(()=> res.status(201).json({message: "post created successfuly :)"}))
+            .catch(error => res.status(400).json({error}));
     
-
-    post.save()
-        .then(()=> res.status(201).json({message: "post created successfuly :)"}))
-        .catch(error => res.status(400).json({error}));
+    }
+    else{
+        console.log(31);
+        delete postObject._id;
+        delete postObject.userId;
+        
+        const post = new Post({
+        
+            ...postObject,
+            userId: req.auth.userId,
+            imageUrl: ""
+            // likes: 0,
+            // usersLiked: [] 
+        });
+        
+        post.save()
+            .then(()=> res.status(201).json({message: "post created successfuly :)"}))
+            .catch(error => res.status(400).json({error}));
+    }
 
 };
 
@@ -46,7 +69,7 @@ exports.updatePost = (req, res, next) =>{
 
     //const postObject = {...req.body};
     //console.log("req.body = ", postObject);
-    
+
     delete postObject._userId;
     Post.findOne({_id:req.params.id})
         .then((post)=>{

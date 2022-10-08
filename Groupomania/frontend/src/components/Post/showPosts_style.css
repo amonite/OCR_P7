@@ -1,6 +1,6 @@
 .postContainer{
     background-color: chocolate;
-    width: 600px;
+    width: 700px;
     display: flex;
     justify-content: center;
 }
@@ -14,4 +14,9 @@
 
 .post p{
     margin-left: 18px;
+}
+
+.post_images{
+    max-width: 512px;
+    max-height: 384px;
 }
