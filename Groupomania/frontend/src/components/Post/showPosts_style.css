@@ -20,3 +20,15 @@
     max-width: 512px;
     max-height: 384px;
 }
+
+.postHud-owner{
+    width: 600px;
+    /* background-color: blueviolet; */
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.fa-heart{
+    cursor: pointer;
+}

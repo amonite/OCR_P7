@@ -13,20 +13,22 @@ import EditPost from "./components/EditPost/editPost";
 
 function App(){
 
+    /* this context is currently not in use, it is left here just in case I might need it */
     const [ulog, setUlog] = useState(null);
     useEffect(()=>{
         
 
-        function getToken(){
-            if(localStorage.length !==0){
-                //const mytoken = JSON.parse(localStorage.getItem("mytoken"))
-               const mytoken = "";
-               return mytoken;
-            }
-        }
-        const token = getToken();
-        
-        setUlog(token);
+        // function getToken(){
+        //     if(localStorage.length !==0){
+        //         //const mytoken = JSON.parse(localStorage.getItem("mytoken"))
+        //        const mytoken = "";
+        //        return mytoken;
+        //     }
+        // }
+        //const token = getToken();
+        let cnt = 0;
+        //setUlog(token);
+        setUlog(cnt);
     },[ulog]);
     
 

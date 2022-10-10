@@ -10,7 +10,7 @@ import "./showPosts_style.css";
 function ShowPosts(){
     
     //const token = useContext(UlogCtx);
-
+    //let count = useContext(UlogCtx);
     const [posts, setPosts] = useState([]);
 
     const token = JSON.parse(localStorage.getItem("mytoken"));
@@ -88,6 +88,71 @@ function ShowPosts(){
         }
     }
 
+    //var count = 0;
+    //const [likes, setLikes] = useState(""); 
+
+    async function likePost(id,usersLiked){
+        // count = 1 - count; 
+        // //setLikes(count);
+        // console.log(`count : ${count}`);
+        // console.l    og(`id : ${id}`);
+        let ulike = 0;
+        //if(postUser_id===userId){
+        if(usersLiked.length !==0){
+            for(let i=0;i<usersLiked.length;i++){
+                console.log(102);
+                if(userId===usersLiked[i]){
+                    ulike = 0;
+                    console.log(`ulike 0 = ${ulike}`);
+                }
+                else{
+                    ulike = 1;
+                    console.log(`ulike 1 = ${ulike}`);
+
+                }
+            }
+        }
+        else{
+            console.log(116);
+            ulike = 1;
+        }
+        //}
+        
+        const postObject = {
+            like: ulike,
+            userId: userId
+        }
+
+        console.log(`postObject.like = ${postObject.like}`);
+
+        await fetch("http://localhost:5000/api/posts/"+id+"/like",{
+            method: "PUT",
+            headers: {
+                "Authorization":"Bearer "+token,
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(postObject)
+        })
+        // .then((res)=>{
+        //     console.log(res.message)
+        //     //window.location.reload(true);
+
+        //  })
+        .then(jsonResponse => jsonResponse.json())
+        .then((res)=>{
+            console.log(res.message);
+            //getAllPosts();
+            refetchData();
+            //window.location="/";
+        })
+        .catch(error => console.log("error delete = ", error))
+
+    }
+
+   async function refetchData(){
+        await getAllPosts();
+   }
+
     return(
         <div>
             <h1>Messages</h1>
@@ -107,13 +172,19 @@ function ShowPosts(){
                 <p>identifiant du posteur :{post.userId}</p> */}
 
                 {userId === post.userId ? 
-                    (<div>
-                        <Link to={`/editPost/${post._id}`}>Editer</Link>
-                        <button type="button" onClick={()=> deletePost(post._id)}>Supprimer</button>
-
+                    (<div className="postHud-owner">
+                        <div className="postHud-owner-actions">
+                            <Link to={`/editPost/${post._id}`}>Editer</Link>
+                            <button type="button" onClick={()=> deletePost(post._id)}>Supprimer</button>
+                        </div>
+                        <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
+                        <div>{post.likes}</div>
                     </div>)
                     :
-                    (<div></div>)} 
+                    (<div className="postHud-other">
+                        <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
+                        <div>{post.likes}</div>
+                    </div>)} 
                 </div>
             ))}
             </div>):(<div>deconnecté</div>)}

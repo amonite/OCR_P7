@@ -65,7 +65,7 @@ exports.updatePost = (req, res, next) =>{
     const postObject = req.file ? {
         ...JSON.parse(req.body.post),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { ...req.body};
+    } : {...JSON.parse(req.body.post)};//{ ...req.body};
 
     //const postObject = {...req.body};
     //console.log("req.body = ", postObject);
@@ -140,5 +140,30 @@ exports.getOnePost = (req, res, next) =>{
 };
 
 exports.likePost = (req, res, next) =>{
-
+    Post.findOne({_id: req.params.id})
+        .then((post)=>{
+            const like = Number(req.body.like);
+            const userId = req.body.userId;
+            if(like === 1){
+                console.log(`like 1 = ${like}`);
+                Post.updateOne({_id: req.params.id},
+                    {$inc:{likes: 1}, $push: {usersLiked:userId}})
+                        .then(()=>{res.status(200).json({message: "post liked !"})})
+                        .catch(error =>{res.status(400).json({error:error});})
+            }
+            else if(like === 0){
+                console.log(`like 0 = ${like}`);
+                if(post.usersLiked.length !==0){
+                    for(i=0; i<post.usersLiked.length;i++){
+                        if(userId == post.usersLiked[i]){
+                            Post.updateOne({_id:req.params.id},
+                                {$inc:{likes: -1}, $pull:{usersLiked:userId}})
+                                    .then(()=>res.status(200).json({message: "post unliked !"}))
+                                    .catch(error =>{res.status(400).json({error:error});})
+                        }
+                    }
+                }
+            }
+        })
+        .catch(error => res.status(400).json({error}));
 };
