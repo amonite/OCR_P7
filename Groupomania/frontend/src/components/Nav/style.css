@@ -9,3 +9,9 @@ nav ul li i{
     height:32px;
 }
 
+.userLogged{
+    width: 700px;
+    justify-content: space-between;
+    display: flex;
+}
+

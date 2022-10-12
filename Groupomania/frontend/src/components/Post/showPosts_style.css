@@ -1,15 +1,17 @@
 .postContainer{
-    background-color: chocolate;
+    background-color: #DFD3C3;
     width: 700px;
     display: flex;
     justify-content: center;
+    margin-top: 96px;
 }
 
 .post{
-    background-color: bisque;
+    background-color: #D0B8A8;
     width: 640px;
     height: 480x;
-    border-radius: 18px;
+    border-radius: 12px;
+    margin-bottom: 32px;
 }
 
 .post p{
@@ -22,13 +24,48 @@
 }
 
 .postHud-owner{
-    width: 600px;
+    width: 616px;
+    /* height: 32px; */
     /* background-color: blueviolet; */
     display: flex;
     justify-content: space-between;
 
 }
 
+.postHud-owner-actions a{
+    color: inherit;
+    margin-left: 8px;
+    
+}
+
+.postHud-owner-actions button{
+    border: none;
+    text-decoration: none;
+    /* background-color: #D0B8A8; */
+}
+
+.postHud-other{
+    width:616px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.likeContainer{
+    width: 48px;
+    /* display: flex;
+    justify-content: space-between; */
+    /* background-color: aqua; */
+}
+
+.likeCounter{
+    padding-left: 6px;
+}
+
 .fa-heart{
     cursor: pointer;
 }
+
+.fa-trash-can{
+    cursor: pointer;
+}
+

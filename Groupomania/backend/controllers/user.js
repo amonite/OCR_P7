@@ -47,11 +47,12 @@ exports.login = (req, res, next) =>{
                     
                     res.status(200).json(
                         {
+                            email: user.email,
                             userId: user._id,
                             //token: "token"
                              token: jwt.sign(
                                  {userId: user._id,
-                                  isAdmin: user.isAdmin
+                                  isAdmin: user.isAdmin,
                                  },
                                  "THE_PCENGINE_RULEZ",
                                  {expiresIn: "24h"}

@@ -36,7 +36,8 @@ function SignInForm(){
                 console.log("token : "+ res.token);
                 localStorage.setItem("mytoken", JSON.stringify(res.token));
                 localStorage.setItem("userId", res.userId);
-                //localStorage.setItem("uid", res.userId);
+                localStorage.setItem("userName",res.email);
+                //localStorage.setItem("gm",JSON.stringify(res.isAdmin));
                 console.log("utilisateur connecté :)");
                 window.location = "/";
             }

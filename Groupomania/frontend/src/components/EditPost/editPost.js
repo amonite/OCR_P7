@@ -24,14 +24,33 @@ function EditPost(){
         const token = JSON.parse(localStorage.getItem("mytoken"));
         console.log("token = "+token);
 
-        /* get data for PUT */
-        const postObject = {
-            message: message
+        // /* get data for PUT */
+        // const postObject = {
+        //     message: message
+        // }
+        // const formdata = new FormData();
+        // formdata.append("post", JSON.stringify(postObject));
+        // //console.log(`img = ${img}`);
+        // formdata.append("image", img);
+        let formdata = new FormData();
+        let postObject;
+
+        if(img !==null){
+            postObject = {
+                message:message
+            }
+            formdata.append("post", JSON.stringify(postObject));
+            formdata.append("image", img);
         }
-        const formdata = new FormData();
-        formdata.append("post", JSON.stringify(postObject));
-        formdata.append("image", img);
+        else{
+            postObject = {
+                message:message,
+                imageUrl:""
+            }
+            formdata.append("post", JSON.stringify(postObject));
+        }
         
+       
         fetch("http://localhost:5000/api/posts/"+id,{
             method: "PUT",
 
@@ -45,8 +64,10 @@ function EditPost(){
         .then(jsonResponse => jsonResponse.json())
         .then((res)=>{
             console.log(res.message)
+            
             window.location= "/";
         })
+       
         .catch(error => console.log("error = ", error));
 
     }

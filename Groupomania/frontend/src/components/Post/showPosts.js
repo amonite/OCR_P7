@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 
 
 import "./showPosts_style.css";
+import jwt_decode from "jwt-decode";
 
 function ShowPosts(){
     
@@ -14,6 +15,18 @@ function ShowPosts(){
     const [posts, setPosts] = useState([]);
 
     const token = JSON.parse(localStorage.getItem("mytoken"));
+    //const userId = localStorage.getItem("userId");
+    let userId = "";
+    let isAdmin;
+    if(token){
+        const decodedToken = jwt_decode(token);
+        userId = decodedToken.userId;
+        isAdmin = decodedToken.isAdmin;
+    };
+
+   // const decodedToken = parseJwt(token);
+
+    //console.log(`decoded token = ${decodedToken}`);
 
     useEffect(()=>{
         getAllPosts();
@@ -57,7 +70,7 @@ function ShowPosts(){
 
     const userLogged = isUserlogged();
 
-    const userId = localStorage.getItem("userId");
+   
 
 
     function deletePost(id){
@@ -155,7 +168,7 @@ function ShowPosts(){
 
     return(
         <div>
-            <h1>Messages</h1>
+            {/* <h1>Messages</h1> */}
             {/* <div>
             {posts.map((post)=> (
                 <p>{post.message}</p>
@@ -171,19 +184,23 @@ function ShowPosts(){
                 {/* <p>identifiant du message :{post._id}</p>
                 <p>identifiant du posteur :{post.userId}</p> */}
 
-                {userId === post.userId ? 
+                {(userId === post.userId) ||(isAdmin === true) ? 
                     (<div className="postHud-owner">
                         <div className="postHud-owner-actions">
                             <Link to={`/editPost/${post._id}`}>Editer</Link>
                             <button type="button" onClick={()=> deletePost(post._id)}>Supprimer</button>
                         </div>
-                        <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
-                        <div>{post.likes}</div>
+                        <div className="likeContainer">
+                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
+                            <div className="likeCounter">{post.likes}</div>
+                        </div>
                     </div>)
                     :
                     (<div className="postHud-other">
-                        <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
-                        <div>{post.likes}</div>
+                        <div className="likeContainer">
+                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
+                            <div className="likeCounter">{post.likes}</div>
+                        </div>
                     </div>)} 
                 </div>
             ))}
