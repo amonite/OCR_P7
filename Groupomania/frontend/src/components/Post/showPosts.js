@@ -18,10 +18,12 @@ function ShowPosts(){
     //const userId = localStorage.getItem("userId");
     let userId = "";
     let isAdmin;
+    let userName;
     if(token){
         const decodedToken = jwt_decode(token);
         userId = decodedToken.userId;
         isAdmin = decodedToken.isAdmin;
+        userName = decodedToken.email;
     };
 
    // const decodedToken = parseJwt(token);
@@ -48,6 +50,7 @@ function ShowPosts(){
         .then((data)=>{
             console.log(data);
             setPosts(data);  // pass the data from the response to the state (var) posts 
+            //logImages();
         })
         .catch(error => console.log("error = ", error));
     } 
@@ -74,26 +77,36 @@ function ShowPosts(){
 
 
     function deletePost(id){
-        fetch("http://localhost:5000/api/posts/"+id,{
-            method: "DELETE",
-            headers: {
-                "Authorization":"Bearer "+token,
-                "Content-Type":"application/json"
-            }
-        })
-        .then((res)=>{
-                console.log(res.message)
-                window.location.reload(true);
 
-        })
-        .catch(error => console.log("error delete = ", error))
+        if(window.confirm("Voulez vous vraiment supprimer votre message ?")){
+
+            fetch("http://localhost:5000/api/posts/"+id,{
+                method: "DELETE",
+                headers: {
+                    "Authorization":"Bearer "+token,
+                    "Content-Type":"application/json"
+                }
+            })
+            .then((res)=>{
+                    console.log(res.message)
+                    window.location.reload(true);
+
+            })
+            .catch(error => console.log("error delete = ", error))
+
+        }
+        else{
+            console.log("you canceled");
+        }
 
     }
 
     function showImages(){
         for(let i=0;i<posts.length;i++){
             if(posts[i].imageUrl !==""){
+                console.log(`imageUrl = ${posts[i].imageUrl}`)
                 return true;
+
             }
             else{
                 return false;
@@ -101,19 +114,23 @@ function ShowPosts(){
         }
     }
 
-    //var count = 0;
-    //const [likes, setLikes] = useState(""); 
+    // function logImages(){
+    //     for(let i=0;i<posts.length;i++){
+            
+    //             console.log(`imageUrl = ${posts[i].imageUrl}`);
+           
+    //     }
+    // }
+
+    
 
     async function likePost(id,usersLiked){
-        // count = 1 - count; 
-        // //setLikes(count);
-        // console.log(`count : ${count}`);
-        // console.l    og(`id : ${id}`);
+     
         let ulike = 0;
-        //if(postUser_id===userId){
+        
         if(usersLiked.length !==0){
             for(let i=0;i<usersLiked.length;i++){
-                console.log(102);
+                
                 if(userId===usersLiked[i]){
                     ulike = 0;
                     console.log(`ulike 0 = ${ulike}`);
@@ -126,10 +143,9 @@ function ShowPosts(){
             }
         }
         else{
-            console.log(116);
+        
             ulike = 1;
         }
-        //}
         
         const postObject = {
             like: ulike,
@@ -166,6 +182,71 @@ function ShowPosts(){
         await getAllPosts();
    }
 
+   const [isEdited,setisEdited] = useState(false);
+   const [postId, setPostId] = useState('');
+   const [message, setMessage] = useState("");
+   const [img, setImg] = useState(null);
+
+   function editPost(_postId){
+        if(isEdited){
+            setisEdited(false)
+        }
+        else{
+        console.log(`post id from edt post = ${_postId}`);
+        setisEdited(true);
+        setPostId(_postId);
+        }
+   }
+
+   /* this function is for testing only */
+   function showMessage(){
+    console.log("toto"+message);
+   }
+
+   function handleEditedMessage(_postId){
+
+        /* get data for PUT */
+        
+        let formdata = new FormData();
+        let postObject;
+
+        if(img !==null){
+            postObject = {
+                message:message
+            }
+            formdata.append("post", JSON.stringify(postObject));
+            formdata.append("image", img);
+        }
+        else{
+            postObject = {
+                message:message,
+                imageUrl:""
+            }
+            formdata.append("post", JSON.stringify(postObject));
+        }
+        
+    
+        fetch("http://localhost:5000/api/posts/"+_postId,{
+            method: "PUT",
+
+            headers:{
+                "Authorization":"Bearer "+token,
+                //"Content-Type":"application/json"
+            },
+            //body: JSON.stringify({message})
+            body:formdata
+        })
+        .then(jsonResponse => jsonResponse.json())
+        .then((res)=>{
+            console.log(res.message)
+            
+            window.location= "/";
+        })
+    
+        .catch(error => console.log("error = ", error));
+
+    }
+
     return(
         <div>
             {/* <h1>Messages</h1> */}
@@ -176,35 +257,88 @@ function ShowPosts(){
 
             </div> */}
             <div className="postContainer">
-            {userLogged ? (<div>{posts.slice(0).reverse().map((post)=> (
-                <div className="post" key={post._id}>
-                
-                {showImages() ? (<img className="post_images"src={post.imageUrl} alt=""></img>):(<div></div>)}
-                <p>{post.message}</p>
-                {/* <p>identifiant du message :{post._id}</p>
-                <p>identifiant du posteur :{post.userId}</p> */}
+                {userLogged ? 
+                    (<div>
+                        {posts.slice(0).reverse().map((post)=> (
+                            <div className="post" key={post._id}>
+                                {showImages() ? 
+                                    (<img className="post-image"src={post.imageUrl} alt=""></img>)
+                                :
+                                (<div className="post-noImage"></div>)
+                                }
+                                {/* <img className="post-images"src={post.imageUrl} alt=""></img> */}
+                                <div className="post-message">
+                                    {/* <p>{post.message}</p> */}
+                                    {isEdited == false && <p>{post.message}</p>}
+                                    {((isEdited && ((userId === post.userId) || (isAdmin === true) )) && (postId === post._id)) && (
+                                        <div className="post-mesasge-edited">
+                                            <textarea
+                                                rows = "12"
+                                                cols = "80"
+                                                defaultValue = {post.message}
+                                                onChange = {(e)=> setMessage(e.target.value)}
+                                            >    
+                                            </textarea>
+                                            <div>
+                                                <input type="file" 
+                                                       name="image"
+                                                       onChange={(e)=>{
+                                                            setImg(e.target.files[0]);
+                                                       }}
+                                                >
+                                                </input>
+                                            </div>
+                                            <div>
+                                                <button type="button" onClick={()=>{
+                                                    // showMessage()
+                                                    handleEditedMessage(post._id)
+                                                    }
+                                                }>
+                                                        Valider
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                {/* <p>identifiant du message :{post._id}</p> */}
+                                <p>auteur :{post.email}</p>
 
-                {(userId === post.userId) ||(isAdmin === true) ? 
-                    (<div className="postHud-owner">
-                        <div className="postHud-owner-actions">
-                            <Link to={`/editPost/${post._id}`}>Editer</Link>
-                            <button type="button" onClick={()=> deletePost(post._id)}>Supprimer</button>
-                        </div>
-                        <div className="likeContainer">
-                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
-                            <div className="likeCounter">{post.likes}</div>
-                        </div>
+                                {(userId === post.userId) || (isAdmin === true) ? 
+                                    (<div className="postHud-owner">
+                                        <div className="postHud-owner-actions">
+                                            {/* <Link to={`/editPost/${post._id}`}><i className="fa-regular fa-xl fa-pen-to-square"></i></Link> */}
+                                            <button type="button" 
+                                                    onClick={()=>{
+                                                        editPost(post._id)
+                                                    }}>
+                                                    <i className="fa-regular fa-xl fa-pen-to-square"></i>
+                                            </button>
+                                            <button type="button" 
+                                                    onClick={()=> {
+                                                        deletePost(post._id)
+                                                    }}>
+                                                    <i className="fa-solid fa-xl fa-trash-can"></i>
+                                            </button>
+                                        </div>
+                                        <div className="likeContainer">
+                                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
+                                            <div className="likeCounter">
+                                                {post.likes}
+                                            </div>
+                                        </div>
+                                    </div>)
+                                    :
+                                    (<div className="postHud-other">
+                                        <div className="likeContainer">
+                                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
+                                            <div className="likeCounter">{post.likes}</div>
+                                        </div>
+                                    </div>)} 
+                            </div>
+                        ))}
                     </div>)
                     :
-                    (<div className="postHud-other">
-                        <div className="likeContainer">
-                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
-                            <div className="likeCounter">{post.likes}</div>
-                        </div>
-                    </div>)} 
-                </div>
-            ))}
-            </div>):(<div>deconnecté</div>)}
+                    (<div>deconnecté</div>)}
             </div>
         </div>
     );

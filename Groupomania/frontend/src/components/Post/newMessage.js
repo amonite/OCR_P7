@@ -4,6 +4,7 @@ import { useState } from "react";
 //import { useForm } from "react-hook-form";
 //import {useContext} from "react";
 //import { UlogCtx } from "../appContext";
+import jwt_decode from "jwt-decode"
 
 function NewMessage(props){
     const isLoggedIn = props.isLoggedIn;
@@ -12,14 +13,24 @@ function NewMessage(props){
     //const token = useContext(UlogCtx);
 
     const token = JSON.parse(localStorage.getItem("mytoken"));
-
-    //const formData = document.getElementById("imgForm");
+    
+    //const userId = localStorage.getItem("userId");
+    let userId = "";
+    let isAdmin;
+    let userName;
+    if(token){
+        const decodedToken = jwt_decode(token);
+        userId = decodedToken.userId;
+        isAdmin = decodedToken.isAdmin;
+        userName = decodedToken.email;
+    };
 
     function handleMessage(){
        
         console.log("img depuis handleMessage = ", img);
         const postObject ={
-            message:message
+            message:message,
+            email:userName
         }
         const formData = new FormData();
         formData.append("post", JSON.stringify(postObject));

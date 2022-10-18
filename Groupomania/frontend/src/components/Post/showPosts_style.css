@@ -7,24 +7,41 @@
 }
 
 .post{
-    background-color: #D0B8A8;
+    background-color: #F8EDE3;
     width: 640px;
     height: 480x;
     border-radius: 12px;
     margin-bottom: 32px;
 }
 
-.post p{
+/* .post p{
     margin-left: 18px;
+} */
+
+.post-message p{
+    margin-top: 0px;
+    margin-left: 18px;
+    /* background-color: red;  */
 }
 
-.post_images{
+.post-message-edited{
+
+}
+
+.post-image{
+    width: 512px;
+    
     max-width: 512px;
     max-height: 384px;
+    object-fit: contain;
+}
+
+.post-noImage{
+    background-color: aqua;
 }
 
 .postHud-owner{
-    width: 616px;
+    width: 624px;
     /* height: 32px; */
     /* background-color: blueviolet; */
     display: flex;
@@ -41,17 +58,17 @@
 .postHud-owner-actions button{
     border: none;
     text-decoration: none;
-    /* background-color: #D0B8A8; */
+    background-color: #D0B8A8;
 }
 
 .postHud-other{
-    width:616px;
+    width:624px;
     display: flex;
     justify-content: flex-end;
 }
 
 .likeContainer{
-    width: 48px;
+    /*  width: 48px; */
     /* display: flex;
     justify-content: space-between; */
     /* background-color: aqua; */
