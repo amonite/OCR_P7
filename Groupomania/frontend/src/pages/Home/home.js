@@ -2,6 +2,7 @@ import "./style.css";
 import Nav from "../../components/Nav/nav"
 import NewMessage from "../../components/Post/newMessage";
 import ShowPosts from "../../components/Post/showPosts";
+import Footer from "../../components/Footer/footer";
 //import { useContext } from "react";
 //import { UlogCtx } from "../../components/appContext";
 
@@ -43,6 +44,7 @@ function Home(){
            <Nav />
            <NewMessage isLoggedIn={islogged()} /> 
            <ShowPosts />
+           <Footer />
         </div>
     )
 

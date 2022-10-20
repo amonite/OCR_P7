@@ -203,26 +203,58 @@ function ShowPosts(){
     console.log("toto"+message);
    }
 
-   function handleEditedMessage(_postId){
+   function handleEditedMessage(_postId, _postMessage){
 
         /* get data for PUT */
         
+        //alert(`postMessage = ${_postMessage}`)
+
+        // let msg = _postMessage; //ok 
+
+        // alert(msg);
+
+      
+
+        //alert(`message = ${message}`);
+
         let formdata = new FormData();
         let postObject;
 
-        if(img !==null){
-            postObject = {
-                message:message
+        if(message == ""){
+            //alert("message vide")
+            if(img !==null){
+                postObject = {
+                    message:_postMessage
+                }
+                formdata.append("post", JSON.stringify(postObject));
+                formdata.append("image", img);
             }
-            formdata.append("post", JSON.stringify(postObject));
-            formdata.append("image", img);
+            else{
+                postObject = {
+                    message:_postMessage,
+                    imageUrl:""
+                }
+                formdata.append("post", JSON.stringify(postObject));
+            }
+
         }
         else{
-            postObject = {
-                message:message,
-                imageUrl:""
+
+
+            if(img !==null){
+                postObject = {
+                    message:message
+                }
+                formdata.append("post", JSON.stringify(postObject));
+                formdata.append("image", img);
             }
-            formdata.append("post", JSON.stringify(postObject));
+            else{
+                postObject = {
+                    message:message,
+                    imageUrl:""
+                }
+                formdata.append("post", JSON.stringify(postObject));
+            }
         }
         
     
@@ -277,8 +309,12 @@ function ShowPosts(){
                                                 cols = "80"
                                                 defaultValue = {post.message}
                                                 onChange = {(e)=> setMessage(e.target.value)}
-                                            >    
+                                                //onLoad = {setMessage(post.message)}
+                                                //value = {message}
+                                            >  
+                                            
                                             </textarea>
+                                            
                                             <div>
                                                 <input type="file" 
                                                        name="image"
@@ -291,7 +327,7 @@ function ShowPosts(){
                                             <div>
                                                 <button type="button" onClick={()=>{
                                                     // showMessage()
-                                                    handleEditedMessage(post._id)
+                                                    handleEditedMessage(post._id, post.message)
                                                     }
                                                 }>
                                                         Valider

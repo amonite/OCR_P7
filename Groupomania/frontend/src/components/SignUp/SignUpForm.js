@@ -1,4 +1,5 @@
 import {useState} from "react";
+import "./style.css";
 
 function SignUpForm(){
 
@@ -9,7 +10,7 @@ function SignUpForm(){
         e.preventDefault();
 
         const emailError = document.querySelector('.emailError');
-
+        const passwordError = document.querySelector(".passwordError")
 
         fetch("http://localhost:5000/api/auth/signup",{
             method: 'POST',
@@ -22,6 +23,9 @@ function SignUpForm(){
         .then((res)=>{
             if(res.message === "cet email est déjà pris ! "){
                 emailError.innerHTML = res.message;
+            }
+            else if(res.message === "votre mot de passe ne convient pas"){
+                passwordError.innerHTML = res.message;
             }
             else{
                 console.log("utilisateur enregistré :)");
@@ -60,6 +64,14 @@ function SignUpForm(){
                 <br/>
                 <input type="submit" value="S'enregister"></input>
             </form>
+            <div className="password-info">
+               
+                <p>
+                <i className="fa-solid fa-circle-info"></i>
+                    Pour être valide votre mot de passe doit comporter au moins 8 charactères,<br/>
+                    une majuscule et deux chiffres.
+                </p> 
+            </div>
         </div>
     )
 }

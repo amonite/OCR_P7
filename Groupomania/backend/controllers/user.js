@@ -1,28 +1,49 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+//const {body, validationResult} = require("express-validator");
+var passwordValidator = require("password-validator");
+
+var schema = new passwordValidator();
+
+schema
+.is().min(8)                                    // Minimum length 8
+.is().max(100)                                  // Maximum length 100
+.has().uppercase(1)                              // Must have uppercase letters
+.has().lowercase()                              // Must have lowercase letters
+.has().digits(2)                                // Must have at least 2 digits
+.has().not().spaces()                           // Should not have spaces
+.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
 
 exports.signup = (req, res, next) =>{
+    
     User.findOne({email:req.body.email})
         .then(user =>{
             if(user){
                 return res.status(400).json({message:"cet email est déjà pris ! "});
             }
 
-            bcrypt.hash(req.body.password, 10) // salt password 10 times !
-                .then(hash =>{
-                    const user = new User({
-                        email: req.body.email,
-                        password: hash,
-                        isAdmin: req.body.isAdmin
-                    });
-                    user.save()
-                        .then(()=> res.status(201).json({message: "utilisateur créé :)"}))
-                        .catch(error => res.status(400).json({error}));
-                })
-                .catch(error => res.status(500).json({error}));
-
-            })
+            if(schema.validate(req.body.password)){
+            
+                bcrypt.hash(req.body.password, 10) // salt password 10 times !
+                    .then(hash =>{
+                        const user = new User({
+                            email: req.body.email,
+                            password: hash,
+                            isAdmin: req.body.isAdmin
+                        });
+                        user.save()
+                            .then(()=> res.status(201).json({message: "utilisateur créé :)"}))
+                            .catch(error => res.status(400).json({error}));
+                    })
+                    .catch(error => res.status(500).json({error}));
+            }
+            else{
+                console.log("erreur mot de passe trop court")
+                return res.status(400).json({message:"votre mot de passe ne convient pas"});
+            };
+            
+        })
         .catch(error => res.status(500).json({error}));
     
 };
