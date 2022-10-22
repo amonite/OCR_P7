@@ -1,6 +1,10 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+dotenv.config()
+
 //const {body, validationResult} = require("express-validator");
 var passwordValidator = require("password-validator");
 
@@ -77,7 +81,8 @@ exports.login = (req, res, next) =>{
                                     userId: user._id,
                                     isAdmin: user.isAdmin,
                                  },
-                                 "THE_PCENGINE_RULEZ",
+                                 process.env.SECRET_PHRASE,
+                                 //"THE_PCENGINE_RULEZ",
                                  {expiresIn: "24h"}
                             )
                             //token: token 

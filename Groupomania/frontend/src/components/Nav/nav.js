@@ -4,20 +4,27 @@ import "./style.css";
 //import {UlogCtx} from "../appContext";
 import jwt_decode from "jwt-decode";
 
+/* ===================== */
+/* application main menu */
+/* ===================== */
+
 function Nav(){
 
-    //const token = useContext(UlogCtx);
-    
-    const userName = localStorage.getItem("userName");
-    // const token = JSON.parse(localStorage.getItem("mytoken"));
-    // const decodedToken = jwt_decode(token);
-    // console.log(`decoded token = ${decodedToken.isAdmin}`);
 
-    
+    const token = JSON.parse(sessionStorage.getItem("mytoken"));
+    // let userId = "";
+    // let isAdmin;
+    let userName;
+    if(token){
+        const decodedToken = jwt_decode(token);
+        // userId = decodedToken.userId;
+        // isAdmin = decodedToken.isAdmin;
+        userName = decodedToken.email;
+    };
 
     function isUserlogged(){
        
-        if(localStorage.length !==0){
+        if(sessionStorage.length !==0){
             return true;
         }
         else{
@@ -30,33 +37,26 @@ function Nav(){
     console.log("userLogged = ",userLogged);
 
     function logout(){
-        localStorage.clear();
+        sessionStorage.clear();
         window.location = "/";
     }
 
     return(
-        // <nav>
-        //     <ul>
-        //         <li><Link to="/"><i className="fa-solid fa-2xl fa-house-chimney-window"></i>Accueil</Link></li>
-        //         <li><Link to="/signin"><i className="fa-solid fa-2xl fa-right-to-bracket"></i>Se connecter</Link> </li>
-        //         <li><Link to="/signup"><i className="fa-solid fa-2xl fa-user-plus"></i>S'enregistrer</Link></li>
-        //     </ul>
-        // </nav>
+       
         <nav>
             {userLogged ? (
-                <div className="userLogged">
-                    <div>vous êtes connecté en tant que : {userName}</div>
-                    {/* <ul>
-                        <li><Link to="/"><i className="fa-solid fa-2xl fa-house-chimney-window"></i>Accueil</Link></li>
-                    </ul> */}
-                    <button type="button" onClick={logout}>Se deconnecter</button>
+                <div className="user-logged">
+                    <div className="user-logged-name">vous êtes connecté en tant que : {userName}</div>
+                    <div className="user-logged-unlog">
+                        <button type="button" onClick={logout}><i className="fa-solid fa-xl fa-right-from-bracket"></i></button>
+                    </div>
                 </div>
             ):(
-                <div className="userUnlogged">
+                <div className="user-unlogged">
                     <ul>
-                        <li><Link to="/"><i className="fa-solid fa-2xl fa-house-chimney-window"></i>Accueil</Link></li>
-                        <li><Link to="/signin"><i className="fa-solid fa-2xl fa-right-to-bracket"></i>Se connecter</Link> </li>
-                        <li><Link to="/signup"><i className="fa-solid fa-2xl fa-user-plus"></i>S'enregistrer</Link></li>
+                        {/* <li><Link to="/"><i className="fa-solid fa-2xl fa-house-chimney-window"></i>Accueil</Link></li> */}
+                        <li><Link style={{color:"inherit", textDecoration:"none"}} to="/signin"><i className="fa-solid fa-2xl fa-right-to-bracket"></i>Se connecter</Link> </li>
+                        <li><Link style={{color:"inherit", textDecoration:"none"}} to="/signup"><i className="fa-solid fa-2xl fa-user-plus"></i>S'enregistrer</Link></li>
                     </ul>
                 </div>
             )}

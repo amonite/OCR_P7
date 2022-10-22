@@ -1,4 +1,49 @@
 textarea{
     resize:none;
-    border-radius: 12px;
+    /* border-radius: 12px; */
+}
+
+.file-input{
+    /* position: absolute;
+    bottom: -35px;
+    left: 10px;
+    font-size: 0.85rem;
+    color: #555; */
+    display: none;
+}
+
+.file-input-label{
+    margin-top: 8px;
+}
+
+.file-name{
+    width:300px;
+    /* background-color: red; */
+}
+
+.message-hud{
+    display:flex;
+    justify-content: space-between;
+    background-color: #D0B8A8;
+    height: 42px;
+    border-radius: 0px 0px 12px 12px;
+    overflow: hidden;
+}
+
+
+
+.send-btn{
+    border: none;
+    text-decoration: none;
+    background-color: #D0B8A8;
+}
+
+.fa-paperclip{
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.fa-paper-plane{
+    cursor: pointer;
+    margin-right: 8px;
 }

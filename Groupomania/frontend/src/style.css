@@ -8,18 +8,16 @@
 
 
 body {
-  max-width: 1440px;
+  /* max-width: 1440px; */
   margin: 0 auto;
   /* margin: 30px; */
-  font-family: 'Lato', 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Droid Sans',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* background-color: rgb(150,150,150); */
+  /* background-color: red;  */
   background-color: #F8EDE3;
   display: flex;
   justify-content: center;
+  font-family: 'Lato', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Droid Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {

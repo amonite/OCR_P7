@@ -1,6 +1,10 @@
 import {useState} from "react";
 import "./style.css";
 
+/* =========================================== */
+/* Sign up component for registering new user  */
+/* =========================================== */
+
 function SignUpForm(){
 
     const [email, setEmail] = useState("");

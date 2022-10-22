@@ -1,17 +1,61 @@
-nav ul li{
+nav{
+    width:100%;
+    background-color: #D0B8A8;
+
+}
+
+.user-logged{
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+}
+
+.user-logged-name{
+    margin-top: 8px;
+}
+
+.user-logged div{
+    margin-left: 12px;
+    
+}
+
+.user-logged-unlog{
+    margin-right: 12px;
+    background-color: #D0B8A8;
+    padding:8px;
+    border-radius: 8px;
+}
+
+.user-logged button{
+    text-decoration: none;
+    border:none;
+    background-color: #D0B8A8;
+}
+
+
+
+.user-unlogged ul li{
     list-style-type: none;
     display: inline-block;
 }
 
-nav ul li i{
-    padding-left: 24px;
+.user-unlogged ul li i{
     width:48px;
     height:32px;
 }
 
-.userLogged{
-    width: 700px;
-    justify-content: space-between;
-    display: flex;
+
+
+.fa-right-from-bracket{
+    
+    padding-top:8px;
+    cursor: pointer;
+
 }
+
+.fa-user-plus{
+    margin-left: 112px;
+}
+
+
 

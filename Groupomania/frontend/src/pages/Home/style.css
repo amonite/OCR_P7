@@ -1,7 +1,8 @@
 .homeContainer{
-    width:1200px;
+    width:100%;
+    max-width:1200px;
     background-color: #DFD3C3;
-    /* background-color: red; */
+    /* background-color: blue; */
     display:flex;
     justify-content: center;
     flex-direction: column;

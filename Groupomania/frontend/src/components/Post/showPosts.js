@@ -1,34 +1,39 @@
-//import {useContext} from "react";
-//import { UlogCtx } from "../appContext";
 import {useEffect} from "react";
 import {useState} from "react";
-import {Link} from "react-router-dom";
-
-
+//import {useContext} from "react";
+//import { UlogCtx } from "../appContext";
+//import {Link} from "react-router-dom";
 import "./showPosts_style.css";
 import jwt_decode from "jwt-decode";
 
+/* ======================================== */
+/* display all posts within a single thread */
+/* ======================================== */
+
 function ShowPosts(){
     
-    //const token = useContext(UlogCtx);
-    //let count = useContext(UlogCtx);
     const [posts, setPosts] = useState([]);
 
-    const token = JSON.parse(localStorage.getItem("mytoken"));
-    //const userId = localStorage.getItem("userId");
+    /* ================================== */
+    /* get user info from session storage */
+    /* ================================== */
+
+    const token = JSON.parse(sessionStorage.getItem("mytoken"));
+
     let userId = "";
     let isAdmin;
-    let userName;
+    //let userName;
+
     if(token){
         const decodedToken = jwt_decode(token);
         userId = decodedToken.userId;
         isAdmin = decodedToken.isAdmin;
-        userName = decodedToken.email;
+        //userName = decodedToken.email;
     };
 
-   // const decodedToken = parseJwt(token);
-
-    //console.log(`decoded token = ${decodedToken}`);
+    /* ================================= */
+    /* fetch all posts from the database */
+    /* ================================= */
 
     useEffect(()=>{
         getAllPosts();
@@ -50,20 +55,18 @@ function ShowPosts(){
         .then((data)=>{
             console.log(data);
             setPosts(data);  // pass the data from the response to the state (var) posts 
-            //logImages();
+            logImages(); // debug test 
         })
         .catch(error => console.log("error = ", error));
     } 
     
+    /* =========================== */
+    /* checks if user is logged in */
+    /* =========================== */
 
     function isUserlogged(){
-        // if(token){
-        //     return true;
-        // }
-        // else{
-        //     return false;
-        // }
-        if(localStorage.length !==0){
+       
+        if(sessionStorage.length !==0){
             return true;
         }
         else{
@@ -73,8 +76,9 @@ function ShowPosts(){
 
     const userLogged = isUserlogged();
 
-   
-
+    /* ============================= */
+    /* delete post from the database */
+    /* ============================= */
 
     function deletePost(id){
 
@@ -101,12 +105,15 @@ function ShowPosts(){
 
     }
 
+    /* ===================================================== */
+    /* check if there is an image to display for every post  */
+    /* ===================================================== */
+
     function showImages(){
         for(let i=0;i<posts.length;i++){
             if(posts[i].imageUrl !==""){
-                console.log(`imageUrl = ${posts[i].imageUrl}`)
+                //console.log(`imageUrl = ${posts[i].imageUrl}`)
                 return true;
-
             }
             else{
                 return false;
@@ -114,15 +121,19 @@ function ShowPosts(){
         }
     }
 
-    // function logImages(){
-    //     for(let i=0;i<posts.length;i++){
-            
-    //             console.log(`imageUrl = ${posts[i].imageUrl}`);
-           
-    //     }
-    // }
+    /* ======================== */
+    /* left here for debug only */
+    /* ======================== */
 
-    
+    function logImages(){
+        for(let i=0;i<posts.length;i++){
+                console.log(`imageUrl = ${posts[i].imageUrl}`);      
+        }
+    }
+
+    /* ==================================== */
+    /* check if user has liked/unliked post */
+    /* ==================================== */
 
     async function likePost(id,usersLiked){
      
@@ -133,17 +144,15 @@ function ShowPosts(){
                 
                 if(userId===usersLiked[i]){
                     ulike = 0;
-                    console.log(`ulike 0 = ${ulike}`);
+                    //console.log(`ulike 0 = ${ulike}`);
                 }
                 else{
                     ulike = 1;
-                    console.log(`ulike 1 = ${ulike}`);
-
+                    //console.log(`ulike 1 = ${ulike}`);
                 }
             }
         }
         else{
-        
             ulike = 1;
         }
         
@@ -152,7 +161,7 @@ function ShowPosts(){
             userId: userId
         }
 
-        console.log(`postObject.like = ${postObject.like}`);
+        //console.log(`postObject.like = ${postObject.like}`);
 
         await fetch("http://localhost:5000/api/posts/"+id+"/like",{
             method: "PUT",
@@ -162,66 +171,56 @@ function ShowPosts(){
             },
             body: JSON.stringify(postObject)
         })
-        // .then((res)=>{
-        //     console.log(res.message)
-        //     //window.location.reload(true);
-
-        //  })
         .then(jsonResponse => jsonResponse.json())
         .then((res)=>{
-            console.log(res.message);
-            //getAllPosts();
+            //console.log(res.message);
             refetchData();
-            //window.location="/";
+            
         })
         .catch(error => console.log("error delete = ", error))
 
     }
 
-   async function refetchData(){
+    /* ================================================================== */
+    /* refetch data is used to refresh page after user liked/unliked post */
+    /* ================================================================== */
+
+    async function refetchData(){
         await getAllPosts();
-   }
+    }
 
-   const [isEdited,setisEdited] = useState(false);
-   const [postId, setPostId] = useState('');
-   const [message, setMessage] = useState("");
-   const [img, setImg] = useState(null);
+    /* ============================= */
+    /* check if post is being edited */
+    /* ============================= */
 
-   function editPost(_postId){
-        if(isEdited){
-            setisEdited(false)
-        }
-        else{
-        console.log(`post id from edt post = ${_postId}`);
-        setisEdited(true);
-        setPostId(_postId);
-        }
-   }
+    const [isEdited,setisEdited] = useState(false);
+    const [postId, setPostId] = useState('');
+    const [message, setMessage] = useState("");
+    const [img, setImg] = useState(null);
+       
+    function editPost(_postId){
+            if(isEdited){
+                setisEdited(false)
+            }
+            else{
+            console.log(`post id from edited post = ${_postId}`);
+            setisEdited(true);
+            setPostId(_postId);
+            }
+    }
 
-   /* this function is for testing only */
-   function showMessage(){
-    console.log("toto"+message);
-   }
+    /* ================= */
+    /* editing of a post */
+    /* ================= */
 
-   function handleEditedMessage(_postId, _postMessage){
-
-        /* get data for PUT */
-        
-        //alert(`postMessage = ${_postMessage}`)
-
-        // let msg = _postMessage; //ok 
-
-        // alert(msg);
-
-      
-
-        //alert(`message = ${message}`);
+    function handleEditedMessage(_postId, _postMessage){
 
         let formdata = new FormData();
         let postObject;
 
-        if(message == ""){
-            //alert("message vide")
+        /* check if post message has been edited or not */
+        if(message === ""){
+            //alert("message vide");
             if(img !==null){
                 postObject = {
                     message:_postMessage
@@ -239,8 +238,6 @@ function ShowPosts(){
 
         }
         else{
-
-
             if(img !==null){
                 postObject = {
                     message:message
@@ -270,8 +267,7 @@ function ShowPosts(){
         })
         .then(jsonResponse => jsonResponse.json())
         .then((res)=>{
-            console.log(res.message)
-            
+            //console.log(res.message);  
             window.location= "/";
         })
     
@@ -280,7 +276,7 @@ function ShowPosts(){
     }
 
     return(
-        <div>
+        <div className="main-container">
             {/* <h1>Messages</h1> */}
             {/* <div>
             {posts.map((post)=> (
@@ -288,20 +284,28 @@ function ShowPosts(){
             ))}
 
             </div> */}
-            <div className="postContainer">
+            <div className="post-container">
                 {userLogged ? 
                     (<div>
                         {posts.slice(0).reverse().map((post)=> (
                             <div className="post" key={post._id}>
-                                {showImages() ? 
-                                    (<img className="post-image"src={post.imageUrl} alt=""></img>)
+                                {/* {showImages() ? 
+                                   
+                                    (
+                                    <div className="post-image-container">
+                                        <img className="post-image"src={post.imageUrl} alt=""></img>
+                                    </div>
+                                    )
+                                    
                                 :
                                 (<div className="post-noImage"></div>)
-                                }
-                                {/* <img className="post-images"src={post.imageUrl} alt=""></img> */}
+                                } */}
+                                <div className="post-image-container">
+                                    <img className="post-images"src={post.imageUrl} alt=""></img>
+                                </div>
                                 <div className="post-message">
                                     {/* <p>{post.message}</p> */}
-                                    {isEdited == false && <p>{post.message}</p>}
+                                    {isEdited === false && <p>{post.message}</p>}
                                     {((isEdited && ((userId === post.userId) || (isAdmin === true) )) && (postId === post._id)) && (
                                         <div className="post-mesasge-edited">
                                             <textarea
@@ -309,8 +313,7 @@ function ShowPosts(){
                                                 cols = "80"
                                                 defaultValue = {post.message}
                                                 onChange = {(e)=> setMessage(e.target.value)}
-                                                //onLoad = {setMessage(post.message)}
-                                                //value = {message}
+                                                
                                             >  
                                             
                                             </textarea>
@@ -337,11 +340,11 @@ function ShowPosts(){
                                     )}
                                 </div>
                                 {/* <p>identifiant du message :{post._id}</p> */}
-                                <p>auteur :{post.email}</p>
+                                <p className="post-author">auteur : {post.email}</p>
 
                                 {(userId === post.userId) || (isAdmin === true) ? 
-                                    (<div className="postHud-owner">
-                                        <div className="postHud-owner-actions">
+                                    (<div className="post-hud-edit">
+                                        <div className="post-hud-edit-buttons">
                                             {/* <Link to={`/editPost/${post._id}`}><i className="fa-regular fa-xl fa-pen-to-square"></i></Link> */}
                                             <button type="button" 
                                                     onClick={()=>{
@@ -374,7 +377,7 @@ function ShowPosts(){
                         ))}
                     </div>)
                     :
-                    (<div>deconnecté</div>)}
+                    (<div></div>)}
             </div>
         </div>
     );

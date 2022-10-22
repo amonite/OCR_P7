@@ -1,27 +1,27 @@
 import "./newMessage_style.css";
 import { useState } from "react";
-//import { useRef } from "react";
-//import { useForm } from "react-hook-form";
-//import {useContext} from "react";
-//import { UlogCtx } from "../appContext";
+
 import jwt_decode from "jwt-decode"
 
 function NewMessage(props){
+
     const isLoggedIn = props.isLoggedIn;
     const [message, setMessage] = useState("");
     const [img, setImg] = useState(null);
-    //const token = useContext(UlogCtx);
-
-    const token = JSON.parse(localStorage.getItem("mytoken"));
     
-    //const userId = localStorage.getItem("userId");
-    let userId = "";
-    let isAdmin;
+    /* ================================== */
+    /* get user info from session storage */
+    /* ================================== */
+
+    const token = JSON.parse(sessionStorage.getItem("mytoken"));
+
+    // let userId = "";
+    // let isAdmin;
     let userName;
     if(token){
         const decodedToken = jwt_decode(token);
-        userId = decodedToken.userId;
-        isAdmin = decodedToken.isAdmin;
+        // userId = decodedToken.userId;
+        // isAdmin = decodedToken.isAdmin;
         userName = decodedToken.email;
     };
 
@@ -45,9 +45,6 @@ function NewMessage(props){
                 //"Content-Type": "multipart/form-data"
             },
             body:formData
-            //body: JSON.stringify(data)
-            //body: JSON.stringify({message:message})
-            //body: JSON.stringify({message:message, imageUrl:img})
            
         })
         .then(jsonResponse => jsonResponse.json())
@@ -58,62 +55,7 @@ function NewMessage(props){
         .catch(error => console.log("error = ", error));
 
     }
-  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     formState:{errors},
-    // } = useForm();
 
-    // const onformSubmit = (data) =>{
-    //     console.log("new data =",data);
-        
-    //     fetch("http://localhost:5000/api/posts",{
-    //     method: "POST",
-    //     headers: {
-
-    //         "Authorization":"Bearer "+token,
-    //         "Content-Type":"application/json"
-    //         //"Content-Type": "multipart/form-data"
-    //     },
-        
-    //     body: new FormData(data)
-    //     })
-    //     .then(jsonResponse => jsonResponse.json())
-    //     .then((res)=>{
-    //         console.log(res.message)
-    //         window.location = "/";
-    //     })
-    //     .catch(error => console.log("error = ", error));
-    //};
-   
-    // const form = useRef(null);
-
-    // const submit = e =>{
-    //     e.preventDefault();
-    //     const data = new FormData(form.current);
-    //     console.log("data = ", data);
-    //     // for(let [name, value] of data){
-    //     //     alert(`${name} = ${value}`);
-    //     // };
-    //     fetch("http://localhost:5000/api/posts",{
-    //         method: "POST",
-    //         headers: {
-
-    //             "Authorization":"Bearer "+token,
-    //             //"Content-Type":"application/json"
-    //             //"Content-Type": "multipart/form-data"
-    //         },
-            
-    //         body: data
-    //     })
-    //     .then(jsonResponse => jsonResponse.json())
-    //     .then((res)=>{
-    //             console.log(res.message)
-    //             window.location = "/";
-    //     })
-    //     .catch(error => console.log("error = ", error));
-    //}
 
     if(isLoggedIn){
         return(
@@ -124,44 +66,42 @@ function NewMessage(props){
                     <textarea 
                         name="message"
                         rows="12" 
-                        cols="80" 
+                        cols="86" 
                         onChange={(e)=> {setMessage(e.target.value)}}
                         value={message}
                         >
                         
                     </textarea>
                     <div className="message-hud">
-                        
-                            <input type="file"
+                        <label htmlFor="file-input" className="file-input-label">
+                            <i className="fa-solid fa-xl fa-paperclip"></i>
+                            
+                        </label>
+                        <input
+                            className="file-input"
+                            id="file-input" 
+                            type="file"
                             name="image"
                             onChange={(e)=>{
                                 console.log("target = ", e.target.files[0]);
                                 setImg(e.target.files[0]);
-                                //setTimeout(function(){console.log("img = ", img)}, 1000); 
+
+                                const[file] = e.target.files;
+                                const {name: fileName, size } = file;
+                                const fileSize = (size/1000).toFixed(2);
+                                const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+                                document.querySelector(".file-name").textContent = fileNameAndSize;
+                                //setTimeout(function(){console.log("img = ", img)}, 1000); // debug
                             }}
-                            ></input>
+                        ></input>
                         
-                        <button type="button" onClick={handleMessage}>Envoyer</button>
+                        <button type="button" className="send-btn" onClick={handleMessage}>
+                            <i className="fa-solid fa-xl fa-paper-plane"></i>
+                        </button>
                         
                     </div>
+                    <p className="file-name"></p>
                 </form>
-
-
-                 {/* <form ref={form} onSubmit={submit}>
-                    <input type="text" name="message"></input>
-                    <input type="file" name="image"></input>
-                    <input type="submit"></input>
-                </form> */}
-
-                {/* <form onSubmit={handleSubmit(onformSubmit)}>
-                    <label htmlFor="message">Enter Message</label>
-                    <textarea rows="12" cols="80" id="message" name="message" {...register("message")}></textarea>
-                    
-                    <label htmlFor="image">Ajouter une image</label>
-                    <input type="file" name="image" {...register("image")}></input>
-
-                    <button>Send data</button>
-                </form> */}
             </div>
         )
     }

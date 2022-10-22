@@ -1,3 +1,8 @@
+header{
+    width:100%;
+    overflow: hidden;
+}
+
 .logo-container{
     display:flex;
     justify-content: center;
@@ -5,4 +10,6 @@
     margin-bottom: 48px;
     cursor: pointer;
     /* background-color: aqua; */
+    /* background-color: #D0B8A8; */
+    width:100%;
 }

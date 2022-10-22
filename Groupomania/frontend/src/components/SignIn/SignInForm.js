@@ -1,6 +1,8 @@
 import { useState } from "react";
-//import axios from "axios";
 
+/* ================================= */
+/* sign in componenent to login user */
+/* ================================= */
 
 function SignInForm(){
     const [email, setEmail] = useState("");
@@ -34,10 +36,11 @@ function SignInForm(){
             else{
                 
                 console.log("token : "+ res.token);
-                localStorage.setItem("mytoken", JSON.stringify(res.token));
-                localStorage.setItem("userId", res.userId);
-                localStorage.setItem("userName",res.email);
-                //localStorage.setItem("gm",JSON.stringify(res.isAdmin));
+                
+                sessionStorage.setItem("mytoken", JSON.stringify(res.token));
+                sessionStorage.setItem("userId", res.userId);
+                sessionStorage.setItem("userName", res.email)
+                
                 console.log("utilisateur connecté :)");
                 window.location = "/";
             }
@@ -81,30 +84,3 @@ function SignInForm(){
 
 export default SignInForm;
 
-
-
-// axios({
-        //     method: "post",
-        //     url: "http://localhost:5000/api/auth/login",
-        //     //withCredentials: true,
-        //     data:{
-        //         email,
-        //         password,
-        //     },
-        //     headers:{
-        //         "Content-Type": "application/json"
-        //     }
-        // })
-        // .then((res)=>{
-        //     //console.log(res.data);
-        //     if(res.data.errors){
-        //         emailError.innerHTML = res.data.errors.email;
-        //         passwordError.innerHTML = res.data.errors.password;
-        //     }
-        //     else{
-        //         window.location = "/";
-        //     }
-        // })
-        // .catch((error)=>{
-        //     console.log(error);
-        // })

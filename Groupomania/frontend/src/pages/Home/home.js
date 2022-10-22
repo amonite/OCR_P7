@@ -3,24 +3,15 @@ import Nav from "../../components/Nav/nav"
 import NewMessage from "../../components/Post/newMessage";
 import ShowPosts from "../../components/Post/showPosts";
 import Footer from "../../components/Footer/footer";
-//import { useContext } from "react";
-//import { UlogCtx } from "../../components/appContext";
+import Header from "../../components/Header/header";
 
 
 function Home(){
 
-    //const token = useContext(UlogCtx);
-   
-   
+    /* check if user is logged */ 
     function islogged(){
-        // if(token){
-        //     console.log("token from home = ", token);
-        //     return true;
-        // }
-        // else{
-        //     return false;
-        // }
-        if(localStorage.length !==0){
+     
+        if(sessionStorage.length !==0){
             return true;
         }
         else{
@@ -28,23 +19,14 @@ function Home(){
         }
     }
 
-    // Clear localStorage 
-    // async function cls(){
-    //     let promise = new Promise((resolve, reject)=>{
-    //         setTimeout(() =>resolve(localStorage.clear()),5000)
-    //     });
-    //      await promise;
-        
-    // }
-    //cls();
-
     return(
         <div className="homeContainer">
-           {/* <h1> page d'accueil 🏠 </h1> */}
-           <Nav />
-           <NewMessage isLoggedIn={islogged()} /> 
-           <ShowPosts />
-           <Footer />
+            <Header />
+            <Nav />
+            <NewMessage isLoggedIn={islogged()} /> 
+            <ShowPosts />
+            {/* <Footer /> */}
+
         </div>
     )
 
