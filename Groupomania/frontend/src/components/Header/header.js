@@ -8,10 +8,9 @@ function Header(){
 
     return(
         <header>
-        <div className="logo-container">
-            <img src="./img/icon-left-font-monochrome-black.svg" onClick={getbackHome} alt="logo-groupomania"></img>
-            
-        </div>
+            <div className="logo-container">
+                <img src="./img/icon-left-font-monochrome-black.svg" onClick={getbackHome} alt="logo-groupomania"></img>  
+            </div>
         </header>
     )
 

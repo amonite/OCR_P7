@@ -1,15 +1,23 @@
+.main{
+    /* width:90%; */   
+}
+
+.main h2{
+    font-size: 1.35em;
+}
+
+#message-form{
+    box-shadow: 0 4px 4px 0 gray;
+    border-radius: 0px 0px 12px 12px;
+    /* background-color: green; */
+}
+
 textarea{
-    resize:none;
-    /* border-radius: 12px; */
+    resize:none; 
 }
 
 .file-input{
-    /* position: absolute;
-    bottom: -35px;
-    left: 10px;
-    font-size: 0.85rem;
-    color: #555; */
-    display: none;
+   display: none;
 }
 
 .file-input-label{
@@ -19,6 +27,9 @@ textarea{
 .file-name{
     width:300px;
     /* background-color: red; */
+    flex:1;
+    margin-left: 8px;
+    margin-top: 6px;
 }
 
 .message-hud{
@@ -28,9 +39,8 @@ textarea{
     height: 42px;
     border-radius: 0px 0px 12px 12px;
     overflow: hidden;
+    
 }
-
-
 
 .send-btn{
     border: none;
@@ -46,4 +56,8 @@ textarea{
 .fa-paper-plane{
     cursor: pointer;
     margin-right: 8px;
+}
+
+.unlogged-msg p{
+    margin-top: 18px;
 }

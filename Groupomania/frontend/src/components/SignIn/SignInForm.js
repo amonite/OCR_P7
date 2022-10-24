@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./style.css";
 
 /* ================================= */
 /* sign in componenent to login user */
@@ -51,7 +52,7 @@ function SignInForm(){
     };
 
     return(
-        <div>
+        <div className="signin-main">
             <h1>Veuillez vous connecter</h1>
             <form action="" onSubmit={handleLogin} id="signIn-form">
                 <label htmlFor="email">Email</label>
@@ -76,7 +77,7 @@ function SignInForm(){
                 />
                 <div className="passwordError"></div>
                 <br/>
-                <input type="submit" value="Se connecter"></input>
+                <input className="signin-btn" type="submit" value="Se connecter"></input>
             </form>
         </div>
     )

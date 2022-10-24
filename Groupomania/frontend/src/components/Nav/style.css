@@ -32,7 +32,10 @@ nav{
     background-color: #D0B8A8;
 }
 
-
+.user-unlogged{
+    display: flex;
+    justify-content: space-around;
+}
 
 .user-unlogged ul li{
     list-style-type: none;

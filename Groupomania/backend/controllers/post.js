@@ -7,10 +7,7 @@ exports.createPost = (req, res, next) =>{
         ...JSON.parse(req.body.post),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : {...JSON.parse(req.body.post)}//{ ...req.body};
-    // const recbody = {...req.body}
-    // const recpost = {...recbody.post};
-    // console.log("reqbody =", recbody);
-    // console.log("reqpost = ",recpost.message);
+    
     if(typeof postObject.imageUrl !== 'undefined'){
         console.log("postObj.imageUrl = ",postObject.imageUrl);
         delete postObject._id;
@@ -31,7 +28,7 @@ exports.createPost = (req, res, next) =>{
     
     }
     else{
-        console.log(31);
+        // console.log(31);
         delete postObject._id;
         delete postObject.userId;
         
@@ -40,8 +37,7 @@ exports.createPost = (req, res, next) =>{
             ...postObject,
             userId: req.auth.userId,
             imageUrl: ""
-            // likes: 0,
-            // usersLiked: [] 
+            
         });
         
         post.save()
@@ -53,14 +49,6 @@ exports.createPost = (req, res, next) =>{
 
 exports.updatePost = (req, res, next) =>{
     
-    // const post = {...req.body};
-    
-    // Post.updateOne({_id:req.params.id}, post)
-    //     .then(
-    //         () => res.status(200).json({message: "post updated successfuly :)"})
-    //     )
-    //     .catch(error => res.status(400).json({error:error}));
-
 
     const postObject = req.file ? {
         ...JSON.parse(req.body.post),
@@ -73,18 +61,14 @@ exports.updatePost = (req, res, next) =>{
     delete postObject._userId;
     Post.findOne({_id:req.params.id})
         .then((post)=>{
-            // if(post.userId !== req.auth.userId){
-            //     res.status(401).json({message:"not authorized ...:/"});
-            // }
-            // else{
-            //     Post.updateOne({_id:req.params.id}, {...postObject, _id:req.params.id})
-            //         .then(()=>{res.status(200).json({message: "post updated sucessfuly :)"});})
-            //         .catch(error =>{res.status(400).json({error:error})})
-            // }
+         
             if(post.userId == req.auth.userId || req.auth.isAdmin == true){
+                const filename = post.imageUrl.split('/images/')[1]; // remove this line
+                            fs.unlink(`images/${filename}`, ()=>{ // remove this line
                 Post.updateOne({_id:req.params.id}, {...postObject, _id:req.params.id})
                     .then(()=>{res.status(200).json({message: "post updated sucessfuly :)"});})
                     .catch(error =>{res.status(400).json({error:error})})
+                            }); //remove this line
             }
             else{
                 res.status(401).json({message: "not authorized ....:/"});

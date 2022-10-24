@@ -23,7 +23,7 @@ function App(){
 
     return(
         <Router>
-        {/* <Header /> */}
+        <Header />
         {/* <UlogCtx.Provider value={ulog}> */}
             <Routes>
             <Route path="/" element={<Home />}></Route>

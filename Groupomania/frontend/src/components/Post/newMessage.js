@@ -59,10 +59,10 @@ function NewMessage(props){
 
     if(isLoggedIn){
         return(
-            <div>
-                <h2>Nouveau message</h2>
-
-                <form id="imgForm">
+            <div className="main">
+                <h2>Nouveau message :</h2>
+                <div id="message-form">
+                <form>
                     <textarea 
                         name="message"
                         rows="12" 
@@ -94,20 +94,25 @@ function NewMessage(props){
                                 //setTimeout(function(){console.log("img = ", img)}, 1000); // debug
                             }}
                         ></input>
+                        <p className="file-name"></p>
                         
                         <button type="button" className="send-btn" onClick={handleMessage}>
                             <i className="fa-solid fa-xl fa-paper-plane"></i>
                         </button>
                         
                     </div>
-                    <p className="file-name"></p>
+                    
                 </form>
+                </div>
+
             </div>
         )
     }
     else{
         return(
-            <div>Vous devez vous connecter pour envoyer un message</div>
+            <div className="unlogged-msg">
+                <p>Vous devez vous connecter pour envoyer un message</p>
+            </div>
         )
     }
 }

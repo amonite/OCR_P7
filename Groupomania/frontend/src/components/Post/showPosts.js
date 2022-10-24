@@ -286,7 +286,7 @@ function ShowPosts(){
             </div> */}
             <div className="post-container">
                 {userLogged ? 
-                    (<div>
+                    (<div className="post-container-sub">
                         {posts.slice(0).reverse().map((post)=> (
                             <div className="post" key={post._id}>
                                 {/* {showImages() ? 
@@ -301,41 +301,68 @@ function ShowPosts(){
                                 (<div className="post-noImage"></div>)
                                 } */}
                                 <div className="post-image-container">
-                                    <img className="post-images"src={post.imageUrl} alt=""></img>
+                                    <img className="post-image"src={post.imageUrl} alt=""></img>
                                 </div>
                                 <div className="post-message">
                                     {/* <p>{post.message}</p> */}
                                     {isEdited === false && <p>{post.message}</p>}
                                     {((isEdited && ((userId === post.userId) || (isAdmin === true) )) && (postId === post._id)) && (
-                                        <div className="post-mesasge-edited">
-                                            <textarea
-                                                rows = "12"
-                                                cols = "80"
-                                                defaultValue = {post.message}
-                                                onChange = {(e)=> setMessage(e.target.value)}
+                                        <div className="post-message-edited">
+                                            <form>
+
+                                                <textarea
+                                                    rows = "12"
+                                                    cols = "86"
+                                                    defaultValue = {post.message}
+                                                    onChange = {(e)=> setMessage(e.target.value)}
+                                                    
+                                                >  
                                                 
-                                            >  
-                                            
-                                            </textarea>
-                                            
-                                            <div>
-                                                <input type="file" 
-                                                       name="image"
-                                                       onChange={(e)=>{
-                                                            setImg(e.target.files[0]);
-                                                       }}
-                                                >
-                                                </input>
-                                            </div>
-                                            <div>
-                                                <button type="button" onClick={()=>{
-                                                    // showMessage()
-                                                    handleEditedMessage(post._id, post.message)
-                                                    }
-                                                }>
-                                                        Valider
-                                                </button>
-                                            </div>
+                                                </textarea>
+                                                <div className="post-message-edited-hud">
+                                                    <div>
+                                                        <input type="file" 
+                                                            name="image"
+                                                            onChange={(e)=>{
+                                                                    setImg(e.target.files[0]);
+                                                            }}
+                                                        >
+                                                        </input>
+                                                        {/* <label htmlFor="file-input" className="file-input-label">
+                                                            <i className="fa-solid fa-xl fa-paperclip"></i>
+                                
+                                                        </label>
+                                                        <input
+                                                            className="file-input"
+                                                            id="file-input" 
+                                                            type="file"
+                                                            name="image"
+                                                            onChange={(e)=>{
+                                                                console.log("target = ", e.target.files[0]);
+                                                                setImg(e.target.files[0]);
+
+                                                                const[file] = e.target.files;
+                                                                const {name: fileName, size } = file;
+                                                                const fileSize = (size/1000).toFixed(2);
+                                                                const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+                                                                document.querySelector(".file-name").textContent = fileNameAndSize;
+                                                                //setTimeout(function(){console.log("img = ", img)}, 1000); // debug
+                                                            }}
+                                                        ></input> */}
+                                                    </div>
+                                                    <div>
+                                                        <button type="button" className="send-btn-edit" onClick={()=>{
+                                                            // showMessage()
+                                                            handleEditedMessage(post._id, post.message)
+                                                            }
+                                                        }>
+                                                            <i className="fa-solid fa-xl fa-paper-plane fa-paper-plane-edit"></i>
+                                                        </button>
+                                                    </div>
+                                                    {/* <p className="file-name"></p> */}
+                                                </div>
+                                                
+                                            </form>
                                         </div>
                                     )}
                                 </div>
@@ -360,7 +387,9 @@ function ShowPosts(){
                                             </button>
                                         </div>
                                         <div className="likeContainer">
-                                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
+                                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}>
+                                                <i className="fa-solid fa-heart heart-back"></i>
+                                            </i>
                                             <div className="likeCounter">
                                                 {post.likes}
                                             </div>
@@ -369,7 +398,9 @@ function ShowPosts(){
                                     :
                                     (<div className="postHud-other">
                                         <div className="likeContainer">
-                                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}></i>
+                                            <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}>
+                                                <i className="fa-solid fa-heart heart-back"></i>
+                                            </i>
                                             <div className="likeCounter">{post.likes}</div>
                                         </div>
                                     </div>)} 

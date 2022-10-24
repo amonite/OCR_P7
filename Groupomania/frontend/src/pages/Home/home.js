@@ -21,7 +21,7 @@ function Home(){
 
     return(
         <div className="homeContainer">
-            <Header />
+            {/* <Header /> */}
             <Nav />
             <NewMessage isLoggedIn={islogged()} /> 
             <ShowPosts />

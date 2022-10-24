@@ -46,7 +46,9 @@ function Nav(){
         <nav>
             {userLogged ? (
                 <div className="user-logged">
-                    <div className="user-logged-name">vous êtes connecté en tant que : {userName}</div>
+                    <div className="user-logged-name">
+                        vous êtes connecté en tant que : {userName}
+                    </div>
                     <div className="user-logged-unlog">
                         <button type="button" onClick={logout}><i className="fa-solid fa-xl fa-right-from-bracket"></i></button>
                     </div>

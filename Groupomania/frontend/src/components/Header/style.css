@@ -1,6 +1,8 @@
 header{
     width:100%;
     overflow: hidden;
+    background-color: #7D6E83;
+
 }
 
 .logo-container{
@@ -9,7 +11,5 @@ header{
     margin-top: 24px;
     margin-bottom: 48px;
     cursor: pointer;
-    /* background-color: aqua; */
-    /* background-color: #D0B8A8; */
     width:100%;
 }
