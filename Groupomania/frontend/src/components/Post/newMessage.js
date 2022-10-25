@@ -26,11 +26,13 @@ function NewMessage(props){
     };
 
     function handleMessage(){
-       
+        
+        const date = new Date();
         console.log("img depuis handleMessage = ", img);
         const postObject ={
             message:message,
-            email:userName
+            email:userName,
+            date:date.toString()
         }
         const formData = new FormData();
         formData.append("post", JSON.stringify(postObject));
@@ -62,11 +64,13 @@ function NewMessage(props){
             <div className="main">
                 <h2>Nouveau message :</h2>
                 <div id="message-form">
-                <form>
+                <form className="new-message-form">
                     <textarea 
+                        // style="width:100%;height:120px"
+
                         name="message"
-                        rows="12" 
-                        cols="86" 
+                        // rows="12" 
+                        // cols="86" 
                         onChange={(e)=> {setMessage(e.target.value)}}
                         value={message}
                         >

@@ -25,7 +25,7 @@ function Home(){
             <Nav />
             <NewMessage isLoggedIn={islogged()} /> 
             <ShowPosts />
-            {/* <Footer /> */}
+            <Footer />
 
         </div>
     )

@@ -7,7 +7,8 @@ const postSchema = mongoose.Schema(
         message: { type: String, required: true },
         likes: { type: Number, default: 0 },
         usersLiked: { type: [String] },
-        imageUrl: {type: String}
+        imageUrl: {type: String},
+        date:{type: String}
     }
 )
 

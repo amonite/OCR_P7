@@ -29,7 +29,8 @@ function SignUpForm(){
                 emailError.innerHTML = res.message;
             }
             else if(res.message === "votre mot de passe ne convient pas"){
-                passwordError.innerHTML = res.message;
+                // passwordError.innerHTML = res.message;
+                passwordError.innerHTML = "Pour être valide votre mot de passe doit comporter au moins 8 caractères une majuscule et 2 chiffres.";
             }
             else{
                 console.log("utilisateur enregistré :)");
@@ -41,7 +42,7 @@ function SignUpForm(){
     
 
     return(
-        <div>
+        <div className="signup-main">
             <h1>Veuillez vous enregistrer</h1>
             <form action="" onSubmit={handleSignUp} id="signUp-form">
                 <label htmlFor="email">Email</label>
@@ -53,7 +54,9 @@ function SignUpForm(){
                     onChange={(e)=> setEmail(e.target.value)}
                     value={email}
                 />
-                <div className="emailError"></div>
+                <div className="emailError">
+
+                </div>
                 <br/>
                 <label htmlFor="password">Password</label>
                 <br/>
@@ -64,17 +67,20 @@ function SignUpForm(){
                     onChange={(e)=> setPassword(e.target.value)}
                     value={password}
                 />
-                <div className="passwordError"></div>
-                <br/>
-                <input type="submit" value="S'enregister"></input>
+                <div className="passwordError">
+                    
+                </div>
+                <div className="signup-btn-container">
+                    <input className="signup-btn" type="submit" value="S'enregister"></input>
+                </div>
             </form>
             <div className="password-info">
                
-                <p>
+                {/* <p>
                 <i className="fa-solid fa-circle-info"></i>
-                    Pour être valide votre mot de passe doit comporter au moins 8 charactères,<br/>
+                    Pour être valide votre mot de passe doit comporter au moins 8 caractères,<br/>
                     une majuscule et deux chiffres.
-                </p> 
+                </p>  */}
             </div>
         </div>
     )

@@ -215,6 +215,7 @@ function ShowPosts(){
 
     function handleEditedMessage(_postId, _postMessage){
 
+        let date = new Date();
         let formdata = new FormData();
         let postObject;
 
@@ -223,7 +224,8 @@ function ShowPosts(){
             //alert("message vide");
             if(img !==null){
                 postObject = {
-                    message:_postMessage
+                    message:_postMessage,
+                    date:date.toString()
                 }
                 formdata.append("post", JSON.stringify(postObject));
                 formdata.append("image", img);
@@ -231,7 +233,8 @@ function ShowPosts(){
             else{
                 postObject = {
                     message:_postMessage,
-                    imageUrl:""
+                    imageUrl:"",
+                    date:date.toString()
                 }
                 formdata.append("post", JSON.stringify(postObject));
             }
@@ -240,7 +243,8 @@ function ShowPosts(){
         else{
             if(img !==null){
                 postObject = {
-                    message:message
+                    message:message,
+                    date:date.toString()
                 }
                 formdata.append("post", JSON.stringify(postObject));
                 formdata.append("image", img);
@@ -248,7 +252,9 @@ function ShowPosts(){
             else{
                 postObject = {
                     message:message,
-                    imageUrl:""
+                    imageUrl:"",
+                    date:date.toString(),
+
                 }
                 formdata.append("post", JSON.stringify(postObject));
             }
@@ -289,6 +295,10 @@ function ShowPosts(){
                     (<div className="post-container-sub">
                         {posts.slice(0).reverse().map((post)=> (
                             <div className="post" key={post._id}>
+                                <div className="post-info">
+                                    <p className="post-author"><b>auteur : </b>{post.email}</p>
+                                    <p className="post-date"><b>date : </b>{post.date}</p>
+                                </div>
                                 {/* {showImages() ? 
                                    
                                     (
@@ -303,6 +313,7 @@ function ShowPosts(){
                                 <div className="post-image-container">
                                     <img className="post-image"src={post.imageUrl} alt=""></img>
                                 </div>
+                             
                                 <div className="post-message">
                                     {/* <p>{post.message}</p> */}
                                     {isEdited === false && <p>{post.message}</p>}
@@ -310,9 +321,10 @@ function ShowPosts(){
                                         <div className="post-message-edited">
                                             <form>
 
-                                                <textarea
-                                                    rows = "12"
-                                                    cols = "86"
+                                                <textarea 
+                                                    className="post-message-edited-textarea"
+                                                    // rows = "12"
+                                                    // cols = "80"
                                                     defaultValue = {post.message}
                                                     onChange = {(e)=> setMessage(e.target.value)}
                                                     
@@ -367,7 +379,7 @@ function ShowPosts(){
                                     )}
                                 </div>
                                 {/* <p>identifiant du message :{post._id}</p> */}
-                                <p className="post-author">auteur : {post.email}</p>
+                                {/* <p className="post-author">auteur : {post.email}</p> */}
 
                                 {(userId === post.userId) || (isAdmin === true) ? 
                                     (<div className="post-hud-edit">
@@ -408,7 +420,9 @@ function ShowPosts(){
                         ))}
                     </div>)
                     :
-                    (<div></div>)}
+                    (<div>
+                        <p>Il n'y a aucun message à afficher</p>
+                    </div>)}
             </div>
         </div>
     );

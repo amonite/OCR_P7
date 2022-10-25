@@ -55,30 +55,36 @@ function SignInForm(){
         <div className="signin-main">
             <h1>Veuillez vous connecter</h1>
             <form action="" onSubmit={handleLogin} id="signIn-form">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="signin-email">Email</label>
                 <br/>
                 <input 
                     type="email" 
-                    name="email" 
-                    id="email" 
+                    name="signin-email" 
+                    id="signin-email" 
                     onChange={(e)=> setEmail(e.target.value)}
                     value={email}
                 />
-                <div className="emailError"></div>    
+                <div className="emailError">
+                    
+                </div>    
                 <br/>
-                <label htmlFor="password">Mot de passe</label>
+                <label htmlFor="signin-password">Mot de passe</label>
                 <br/>
                 <input 
                     type="password"
-                    name="password"
-                    id="password"
+                    name="signin-password"
+                    id="signin-password"
                     onChange={(e)=> setPassword(e.target.value)}
                     value={password}
                 />
-                <div className="passwordError"></div>
-                <br/>
-                <input className="signin-btn" type="submit" value="Se connecter"></input>
+                <div className="passwordError">
+
+                </div>
+                <div className="signin-btn-container">
+                    <input className="signin-btn" type="submit" value="Se connecter"></input>
+                </div>
             </form>
+
         </div>
     )
 };
