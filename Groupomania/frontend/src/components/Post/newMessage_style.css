@@ -24,6 +24,11 @@ textarea{
     width:100%;
     height:240px;
     resize:none; 
+    background-color: rgb(235,235,235);
+}
+
+textarea:focus{
+    outline: none;
 }
 
 .file-input{

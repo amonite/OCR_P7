@@ -29,6 +29,7 @@ function NewMessage(props){
         
         const date = new Date();
         console.log("img depuis handleMessage = ", img);
+        
         const postObject ={
             message:message,
             email:userName,

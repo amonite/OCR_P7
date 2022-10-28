@@ -1,16 +1,15 @@
 .main-container{
-    width:100%;
-    /* width:800px; */
+    width: 100%;
     background-color: #dfd3c3;
     /* background-color: red; */
     display: flex;
     justify-content: center;
+    margin-bottom: 32px;
 }
 
 .post-container{
     background-color: #dfd3c3;
     /* background-color: blue; */
-    /* width: 768px; */
     width: 90%;
     display: flex;
     justify-content: center;
@@ -18,45 +17,47 @@
 }
 
 .post-container-sub{
-    width:100%;
+    width: 100%;
 }
 
 .post{
     background-color: #F8EDE3;
-    /* width: 640px; */
-    width:100%;
-    /* height: 480x; */
+    width: 100%;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-    margin-bottom: 48px;
     box-shadow: 0 4px 4px 0 gray;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 48px;
+
 }
 
 .post-info{
-    /* background-color: #D0B8A8; */
-    background-color: #7D6E83;
-    width:100%;
+    /* background-color: #E38B29; */
+    /* background-color: #7D6E83; */
+    background-color: #D0B8A8;
+    width: 100%;
 }
+
 .post-author{
     margin-top: 4px;
     margin-bottom: 0px;
 }
+
 .post-date{
     margin-top: 2px;
-    margin-left:12px;
+    margin-left: 12px;
     margin-bottom: 4px;
 }
 
 .post-message{
-    width:95%;
+    width: 95%;
 }
 
 .post-message-edited{
-    width:100%;
+    width: 100%;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
     margin-bottom: 32px;
@@ -65,8 +66,6 @@
 }
 
 .post-message-edited form{
-    /* width: 100%; */
-  
     margin-left: 0px;
 }
 
@@ -75,10 +74,6 @@
     width: 100%;
     height: 240px;
 }
-
-/* textarea{
-    
-} */
 
 .post-message-edited-hud{
     display:flex;
@@ -96,55 +91,41 @@
     margin-top: 8px;
 }
 
-
-
 .post-message p{
-    /* width:640px; */
-    /* width:100%; */
     margin-top: 0px;
     margin-left: 18px;
     margin-right: 18px;
     text-align: justify;
     text-justify: inter-word;
-    /* background-color: red;  */
 }
 
 .post-image-container{
     width:95%;
-    /* background-color: red; */
     display: flex;
-    justify-content: center;
-    
+    justify-content: center;   
     margin-bottom: 24px;
 }
 
 .post-image{
-    /* width: 632px; */
     width: 100%;
     margin-top: 12px;
-    /* margin-top: 12px; */
-    /* max-width: 800px;  */
-    /* max-height: 384px;  */
     object-fit: contain;
 }
 
 .post-noImage{
-    /* background-color: aqua; */
     width:100%;
     margin-top: 4px;
 }
 
 .post-hud-edit{
-    /* width: 640px; */
     width:100%;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
     height: 48px;
-    /* background-color: blueviolet; */
+    /* background-color: #F1A661; */
     background-color: #D0B8A8;
     display: flex;
     justify-content: space-between;
-
 }
 
 .post-hud-edit-buttons button{
@@ -157,13 +138,11 @@
 
 .postHud-other{
     width:100%;
-    /* width:640px; */
     display: flex;
     justify-content: flex-end;
     background-color: #D0B8A8;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-
 }
 
 .post-author{
@@ -173,10 +152,6 @@
 .likeContainer{
     margin-top: 8px;
     margin-right: 8px;
-    /*  width: 48px; */
-    /* display: flex;
-    justify-content: space-between; */
-    /* background-color: aqua; */
     position:relative;
 }
 
@@ -186,13 +161,9 @@
 
 .fa-heart{
     cursor: pointer;
-    /* opacity: 0; */
-    /* color: red; */
-
 }
 
 .fa-heart:hover{
-    /* opacity: 0; */
     color:red;
 }
 
@@ -224,12 +195,3 @@
     color:blue;
 }
 
-@media all and (max-width:768px){
-
-.main-container{
-    /* width:680px; */
-}
-
-
-
-}
