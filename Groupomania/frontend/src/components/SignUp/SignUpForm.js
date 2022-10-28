@@ -13,38 +13,58 @@ function SignUpForm(){
     function handleSignUp(e){
         e.preventDefault();
 
+        const isEmail = document.getElementById("email");
+
+        isEmail.addEventListener("input",(event)=>{
+            if(isEmail.validity.typeMismatch){
+                isEmail.setCustomValidity("enter email plz!");
+                isEmail.reportValidity();
+            }
+            else{
+                isEmail.setCustomValidity('');
+            }
+        })
+        
+
+       
         const emailError = document.querySelector('.emailError');
         const passwordError = document.querySelector(".passwordError")
 
-        fetch("http://localhost:5000/api/auth/signup",{
-            method: 'POST',
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify({email, password})
-        })
-        .then(jsonResponse => jsonResponse.json())
-        .then((res)=>{
-            if(res.message === "cet email est déjà pris ! "){
-                emailError.innerHTML = res.message;
-            }
-            else if(res.message === "votre mot de passe ne convient pas"){
-                // passwordError.innerHTML = res.message;
-                passwordError.innerHTML = "Pour être valide votre mot de passe doit comporter au moins 8 caractères une majuscule et 2 chiffres.";
-            }
-            else{
-                console.log("utilisateur enregistré :)");
-                window.location = "/signin";
-            }
-        })
-        .catch(error => console.log('error sign up = ', error));
+
+        
+       
+            fetch("http://localhost:5000/api/auth/signup",{
+                method: 'POST',
+                headers: {
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({email, password})
+            })
+            .then(jsonResponse => jsonResponse.json())
+            .then((res)=>{
+                if(res.message === "cet email est déjà pris ! "){
+                    emailError.innerHTML = res.message;
+                }
+                else if(res.message === "votre mot de passe ne convient pas"){
+                    // passwordError.innerHTML = res.message;
+                    passwordError.innerHTML = "Pour être valide votre mot de passe doit comporter au moins 8 caractères une majuscule et 2 chiffres.";
+                }
+                else{
+                    console.log("utilisateur enregistré :)");
+                    window.location = "/signin";
+                }
+            })
+            .catch(error => console.log('error sign up = ', error));
+        
     };
+
+  
     
 
     return(
         <div className="signup-main">
             <h1>Veuillez vous enregistrer</h1>
-            <form action="" onSubmit={handleSignUp} id="signUp-form">
+            <form action="" onSubmit={(e)=>handleSignUp(e)} id="signUp-form">
                 <label htmlFor="email">Email</label>
                 <br/>
                 <input 

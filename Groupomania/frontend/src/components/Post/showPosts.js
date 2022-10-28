@@ -10,8 +10,8 @@ import jwt_decode from "jwt-decode";
 /* display all posts within a single thread */
 /* ======================================== */
 
-function ShowPosts(){
-    
+function ShowPosts(props){
+    const isLoggedIn = props.isLoggedIn;
     const [posts, setPosts] = useState([]);
 
     /* ================================== */
@@ -34,10 +34,13 @@ function ShowPosts(){
     /* ================================= */
     /* fetch all posts from the database */
     /* ================================= */
-
+    
     useEffect(()=>{
+        if(isLoggedIn){
         getAllPosts();
+        }
     },[]);
+    
     
     function getAllPosts(){
         fetch("http://localhost:5000/api/posts",{
@@ -280,8 +283,9 @@ function ShowPosts(){
         .catch(error => console.log("error = ", error));
 
     }
-
+    if(isLoggedIn){
     return(
+        
         <div className="main-container">
             {/* <h1>Messages</h1> */}
             {/* <div>
@@ -425,7 +429,9 @@ function ShowPosts(){
                     </div>)}
             </div>
         </div>
+                    
     );
+    }
 }
 
 export default ShowPosts;

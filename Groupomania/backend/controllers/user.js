@@ -20,7 +20,9 @@ schema
 .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
 
 exports.signup = (req, res, next) =>{
-    
+    // if(req.body.email === "coco"){
+    //     return res.status(400).json({message:"cet email ne convient pas !"})
+    // }
     User.findOne({email:req.body.email})
         .then(user =>{
             if(user){
