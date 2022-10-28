@@ -11,7 +11,7 @@ const app = express();
 
 dotenv.config();
 
-//'mongodb+srv://admin:Groupomania7619@cluster0.jw10pf1.mongodb.net/?retryWrites=true&w=majority'
+
 mongoose.connect(process.env.USER_KEY,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
@@ -41,40 +41,6 @@ app.use((req, res, next) => {
   app.use("/api/posts", postRoutes);
   app.use("/api/auth", userRoutes);
   app.use("/images", express.static(path.join(__dirname, 'images')));
-// test route get 
-// app.use("/api/stuff", (req, res, next)=>{
-//     const stuff = [
-//         {
-//             _id: "001",
-//             name: "obj1",
-//             desc: "ceci est l'objet 1"
-//         },
-//         {
-//             _id: "002",
-//             name: "obj2",
-//             desc: "ceci est l'objet 2"
-//         },
-//         {
-//             _id: "003",
-//             name: "obj3",
-//             desc: "ceci est l'objet 3"
-//         }
-//     ];
-//     res.status(200).json(stuff);
-// });
-
-// test route post (const Post = require('./models/Post');)
-// app.post("/api/post", (req, res, next) =>{
-//     // console.log(req.body);
-//     // res.status(201).json({message: "objet créé :)"});
-//     delete req.body._id;
-//     const post = new Post({
-//         ...req.body 
-//     });
-//     post.save()
-//         .then(()=> res.status(201).json({message:"post enregistré :)"}))
-//         .catch(error => res.status(400).json({error}));
-// });
 
 
 module.exports = app;

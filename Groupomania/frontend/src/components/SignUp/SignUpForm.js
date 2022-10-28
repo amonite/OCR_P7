@@ -17,7 +17,7 @@ function SignUpForm(){
 
         isEmail.addEventListener("input",(event)=>{
             if(isEmail.validity.typeMismatch){
-                isEmail.setCustomValidity("enter email plz!");
+                isEmail.setCustomValidity("Vous devez entrer une adresse email valide");
                 isEmail.reportValidity();
             }
             else{
@@ -65,7 +65,7 @@ function SignUpForm(){
         <div className="signup-main">
             <h1>Veuillez vous enregistrer</h1>
             <form action="" onSubmit={(e)=>handleSignUp(e)} id="signUp-form">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">E-mail</label>
                 <br/>
                 <input 
                     type="email"
@@ -78,7 +78,7 @@ function SignUpForm(){
 
                 </div>
                 <br/>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Mot de passe</label>
                 <br/>
                 <input
                     type="password"

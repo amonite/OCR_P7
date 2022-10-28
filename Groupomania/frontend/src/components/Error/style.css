@@ -1,0 +1,23 @@
+.error-main{
+    width:1280px;
+    /* background-color: red; */
+}
+
+@media all and (max-width:1280px){
+    .error-main{
+        width:992px;
+    }
+}
+
+
+@media all and (max-width:992px){
+    .error-main{
+        width:768px;
+    }
+}
+
+@media all and (max-width:768px){
+    .error-main{
+        width:640px;
+    }
+}

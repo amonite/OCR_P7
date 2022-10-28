@@ -295,7 +295,7 @@ function ShowPosts(props){
 
             </div> */}
             <div className="post-container">
-                {userLogged ? 
+                {userLogged && posts.length !=0 ? 
                     (<div className="post-container-sub">
                         {posts.slice(0).reverse().map((post)=> (
                             <div className="post" key={post._id}>
