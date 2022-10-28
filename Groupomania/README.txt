@@ -57,7 +57,7 @@ SECRET_PHRASE='une_chaîne_de_caractères_de_votre_choix'
 
 Linux :
 Dans un terminal entrez la comande suivante :
-sudo pat-get install nodejs
+sudo apt-get install nodejs
 
 Windows et Mac:
 allez sur https://nodejs.org/en/ puis installez la dernière version.
@@ -75,14 +75,14 @@ npm run start
 Dans le navigateur de votre choix allez à l'adresse suivante :
 http://localhost:3000
 
-Voila tout est en place est Groupomania devrait se lancer en local sur votre ordinateur.
+Voila tout est en place et Groupomania devrait se lancer en local sur votre ordinateur.
 
-5 - Créer un utilisateur administrateur :
+5 - Créez un utilisateur administrateur :
 
 Afin de pouvoir modérer les messages postés sur Groupomania il est nécessaire de créer
 un compte qui dispose des droits d'administration. 
 
-Commencer par vous enregistrer dans l'application  avec une adresse email et un mot de 
+Commencez par vous enregistrer dans l'application  avec une adresse email et un mot de 
 passe de votre choix. 
 
 Ensuite sur le site de mongoDB vous avez la possibilité de consulter et d'éditer les 
@@ -91,5 +91,5 @@ données présentes dans la base depuis l'onglet Collections.
 Cliquez sur "users" pour voir les données de votre utilisateur nouvellement créé.
 Puis sur l'icone d'edition qui apparait quand vous passez la souris sur les dif-
 férents champs du document. 
-Changez la valeur de isAdmin pour le passer de l'état 'false' à l'état 'true'.
+Changez la valeur de 'isAdmin' pour le passer de l'état 'false' à l'état 'true'.
 
