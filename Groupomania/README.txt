@@ -18,6 +18,8 @@ Une fois le projet cloné il vous faudra suivre les étapes suivantes:
     Afin de faire fonctionner la partie backend il est tout d'abord nécessaire de créer un compte
 sur le site de mongoDB qui propose un service gratuit de base de donnée (database as a service).
 
+https://www.mongodb.com/cloud/atlas
+
 Une fois votre compte gratuit activé, créez un cluster en le configurant avec l'option AWS et 
 uniquement les options gratuites.
 
