@@ -139,8 +139,15 @@ function ShowPosts(props){
     /* check if user has liked/unliked post */
     /* ==================================== */
 
+    // const [like, setLike] = useState(0)
+
+    // function onOff(){
+    //     setLike(1-like);
+    //     return like
+    // }
+
     async function likePost(id,usersLiked){
-     
+        
         let ulike = 0;
         
         if(usersLiked.length !==0){
@@ -164,7 +171,7 @@ function ShowPosts(props){
             like: ulike,
             userId: userId
         }
-
+      
         //console.log(`postObject.like = ${postObject.like}`);
 
         await fetch("http://localhost:5000/api/posts/"+id+"/like",{

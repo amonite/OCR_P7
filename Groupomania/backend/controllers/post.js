@@ -126,21 +126,36 @@ exports.likePost = (req, res, next) =>{
             const like = Number(req.body.like);
             const userId = req.body.userId;
             if(like === 1){
-                console.log(`like 1 = ${like}`);
-                console.log(post.usersLiked);
+                // console.log(`like 1 = ${like}`);
+                console.log(`userId = ${userId}`);
+                // console.log("array length = "+post.usersLiked.length);
+
+                if(typeof userId=="undefined"){
+                    return res.status(400).json({message: "you can't like twice !"});
+
+                }
+                // for(i=0;i<post.usersLiked.length;i++){
+                //     if(userId == post.usersLiked[i] || userId == ""){
+
+                //         return res.status(400).json({message: "you can't like twice !"});
+                //     }
+                // }
+
                 Post.updateOne({_id: req.params.id},
-                        // {$push: {usersLiked:userId}})
+                        // {$push: {usersLiked:userId}, $set:{likes:post.usersLiked.length}})
                         {$inc:{likes: 1}, $push: {usersLiked:userId}})
-                        .then(()=>{res.status(200).json({message: "post liked !"})})
+                        .then(()=>{res.status(200).json({message: "post liked oki!"})})
                         .catch(error =>{res.status(400).json({error:error});})
             }
             else if(like === 0){
                 console.log(`like 0 = ${like}`);
+                console.log("array length = "+post.usersLiked.length);
+
                 if(post.usersLiked.length !==0){
                     for(i=0; i<post.usersLiked.length;i++){
                         if(userId == post.usersLiked[i]){
                             Post.updateOne({_id:req.params.id},
-                                // {$pull: {userLiked:userId}})
+                                //  {$pull: {userLiked:userId}, $set:{likes:post.usersLiked.length}})
                                 {$inc:{likes: -1}, $pull:{usersLiked:userId}})
                                     .then(()=>res.status(200).json({message: "post unliked !"}))
                                     .catch(error =>{res.status(400).json({error:error});})

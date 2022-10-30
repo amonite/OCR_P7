@@ -66,6 +66,7 @@ allez sur https://nodejs.org/en/ puis installez la dernière version.
 
     Depuis le dossier du backend entrez les commandes suivante dans un terminal:
 npm install
+npm start
 node server 
 
 Depuis le dossier du frontend entrez les commandes suivantes dans un terminal:
