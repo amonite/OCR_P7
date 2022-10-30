@@ -110,19 +110,20 @@ function ShowPosts(props){
 
     /* ===================================================== */
     /* check if there is an image to display for every post  */
+    /* currently not in use ... */
     /* ===================================================== */
 
-    function showImages(){
-        for(let i=0;i<posts.length;i++){
-            if(posts[i].imageUrl !==""){
-                //console.log(`imageUrl = ${posts[i].imageUrl}`)
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    }
+    // function showImages(){
+    //     for(let i=0;i<posts.length;i++){
+    //         if(posts[i].imageUrl !==""){
+    //             //console.log(`imageUrl = ${posts[i].imageUrl}`)
+    //             return true;
+    //         }
+    //         else{
+    //             return false;
+    //         }
+    //     }
+    // }
 
     /* ======================== */
     /* left here for debug only */
@@ -295,7 +296,7 @@ function ShowPosts(props){
 
             </div> */}
             <div className="post-container">
-                {userLogged && posts.length !=0 ? 
+                {userLogged && posts.length !==0 ? 
                     (<div className="post-container-sub">
                         {posts.slice(0).reverse().map((post)=> (
                             <div className="post" key={post._id}>
@@ -408,6 +409,7 @@ function ShowPosts(props){
                                             </i>
                                             <div className="likeCounter">
                                                 {post.likes}
+                                                {/* {post.usersLiked.length} */}
                                             </div>
                                         </div>
                                     </div>)
@@ -417,7 +419,10 @@ function ShowPosts(props){
                                             <i className="fa-regular fa-xl fa-heart" onClick={()=>likePost(post._id, post.usersLiked)}>
                                                 <i className="fa-solid fa-heart heart-back"></i>
                                             </i>
-                                            <div className="likeCounter">{post.likes}</div>
+                                            <div className="likeCounter">
+                                                {post.likes}
+                                                {/* {post.usersLiked.length} */}
+                                            </div>
                                         </div>
                                     </div>)} 
                             </div>

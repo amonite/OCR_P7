@@ -8,7 +8,7 @@ import SignIn from "./pages/SignIn/signIn";
 import SignUp from './pages/SignUp/signUp';
 import Error from './components/Error/error';
 import Header from './components/Header/header';
-import Footer from "./components/Footer/footer";
+//import Footer from "./components/Footer/footer";
 //import EditPost from "./components/EditPost/editPost";
 
 

@@ -127,8 +127,10 @@ exports.likePost = (req, res, next) =>{
             const userId = req.body.userId;
             if(like === 1){
                 console.log(`like 1 = ${like}`);
+                console.log(post.usersLiked);
                 Post.updateOne({_id: req.params.id},
-                    {$inc:{likes: 1}, $push: {usersLiked:userId}})
+                        // {$push: {usersLiked:userId}})
+                        {$inc:{likes: 1}, $push: {usersLiked:userId}})
                         .then(()=>{res.status(200).json({message: "post liked !"})})
                         .catch(error =>{res.status(400).json({error:error});})
             }
@@ -138,12 +140,16 @@ exports.likePost = (req, res, next) =>{
                     for(i=0; i<post.usersLiked.length;i++){
                         if(userId == post.usersLiked[i]){
                             Post.updateOne({_id:req.params.id},
+                                // {$pull: {userLiked:userId}})
                                 {$inc:{likes: -1}, $pull:{usersLiked:userId}})
                                     .then(()=>res.status(200).json({message: "post unliked !"}))
                                     .catch(error =>{res.status(400).json({error:error});})
                         }
                     }
                 }
+            }
+            else if(like > 1 || like < 0){
+                return res.status(400).json({message: "you can't hack this !"});
             }
         })
         .catch(error => res.status(400).json({error}));
