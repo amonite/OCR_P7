@@ -134,12 +134,12 @@ exports.likePost = (req, res, next) =>{
                     return res.status(400).json({message: "you can't like twice !"});
 
                 }
-                // for(i=0;i<post.usersLiked.length;i++){
-                //     if(userId == post.usersLiked[i] || userId == ""){
+                for(i=0;i<post.usersLiked.length;i++){
+                    if(userId == post.usersLiked[i] || typeof userId == "undefined"){
 
-                //         return res.status(400).json({message: "you can't like twice !"});
-                //     }
-                // }
+                        return res.status(400).json({message: "you can't like twice !"});
+                    }
+                }
 
                 Post.updateOne({_id: req.params.id},
                         // {$push: {usersLiked:userId}, $set:{likes:post.usersLiked.length}})
