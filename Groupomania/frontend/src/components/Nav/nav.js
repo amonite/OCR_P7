@@ -12,13 +12,11 @@ function Nav(){
 
 
     const token = JSON.parse(sessionStorage.getItem("mytoken"));
-    // let userId = "";
-    // let isAdmin;
+   
     let userName;
     if(token){
         const decodedToken = jwt_decode(token);
-        // userId = decodedToken.userId;
-        // isAdmin = decodedToken.isAdmin;
+       
         userName = decodedToken.email;
     };
 
@@ -34,7 +32,6 @@ function Nav(){
 
     const userLogged = isUserlogged();
 
-    console.log("userLogged = ",userLogged);
 
     function logout(){
         sessionStorage.clear();

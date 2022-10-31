@@ -7,7 +7,7 @@ const path = require("path");
 const dotenv = require("dotenv");
 const app = express();
 
-//const cors = require('cors');
+
 
 dotenv.config();
 
@@ -20,13 +20,7 @@ mongoose.connect(process.env.USER_KEY,
 
 app.use(express.json());
 
-// app.use((req, res) =>{
-//     res.json({message: "votre requête à bien été reçue :)"})
-// });
 
-// app.use(cors({
-//   origin:"http://localhost:5000"
-// }));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*'); //acess api from anywhere 

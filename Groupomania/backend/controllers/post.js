@@ -18,8 +18,7 @@ exports.createPost = (req, res, next) =>{
             ...postObject,
             userId: req.auth.userId,
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-            // likes: 0,
-            // usersLiked: [] 
+          
         });
         
         post.save()
@@ -28,7 +27,7 @@ exports.createPost = (req, res, next) =>{
     
     }
     else{
-        // console.log(31);
+        
         delete postObject._id;
         delete postObject.userId;
         
@@ -55,8 +54,6 @@ exports.updatePost = (req, res, next) =>{
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : {...JSON.parse(req.body.post)};//{ ...req.body};
 
-    //const postObject = {...req.body};
-    console.log("postObject = ", postObject);
 
     delete postObject._userId;
     Post.findOne({_id:req.params.id})
@@ -81,9 +78,9 @@ exports.deletePost = (req, res, next) =>{
   
     Post.findOne({_id: req.params.id})
         .then(post =>{
-                //console.log(`req.auth.user`)
+            
                 if(post.userId == req.auth.userId || req.auth.isAdmin == true){
-                    //console.log(100);
+                
                     const filename = post.imageUrl.split('/images/')[1];
                             fs.unlink(`images/${filename}`, ()=>{
                         Post.deleteOne({_id:req.params.id})
@@ -126,10 +123,7 @@ exports.likePost = (req, res, next) =>{
             const like = Number(req.body.like);
             const userId = req.body.userId;
             if(like === 1){
-                // console.log(`like 1 = ${like}`);
-                console.log(`userId = ${userId}`);
-                // console.log("array length = "+post.usersLiked.length);
-
+                
                 if(typeof userId=="undefined"){
                     return res.status(400).json({message: "you can't like twice !"});
 
@@ -142,20 +136,16 @@ exports.likePost = (req, res, next) =>{
                 }
 
                 Post.updateOne({_id: req.params.id},
-                        // {$push: {usersLiked:userId}, $set:{likes:post.usersLiked.length}})
                         {$inc:{likes: 1}, $push: {usersLiked:userId}})
                         .then(()=>{res.status(200).json({message: "post liked oki!"})})
                         .catch(error =>{res.status(400).json({error:error});})
             }
             else if(like === 0){
-                console.log(`like 0 = ${like}`);
-                console.log("array length = "+post.usersLiked.length);
 
                 if(post.usersLiked.length !==0){
                     for(i=0; i<post.usersLiked.length;i++){
                         if(userId == post.usersLiked[i]){
                             Post.updateOne({_id:req.params.id},
-                                //  {$pull: {userLiked:userId}, $set:{likes:post.usersLiked.length}})
                                 {$inc:{likes: -1}, $pull:{usersLiked:userId}})
                                     .then(()=>res.status(200).json({message: "post unliked !"}))
                                     .catch(error =>{res.status(400).json({error:error});})

@@ -50,7 +50,7 @@ function SignUpForm(){
                     passwordError.innerHTML = "Pour être valide votre mot de passe doit comporter au moins 8 caractères une majuscule et 2 chiffres.";
                 }
                 else{
-                    console.log("utilisateur enregistré :)");
+                    
                     window.location = "/signin";
                 }
             })
@@ -96,11 +96,7 @@ function SignUpForm(){
             </form>
             <div className="password-info">
                
-                {/* <p>
-                <i className="fa-solid fa-circle-info"></i>
-                    Pour être valide votre mot de passe doit comporter au moins 8 caractères,<br/>
-                    une majuscule et deux chiffres.
-                </p>  */}
+            
             </div>
         </div>
     )

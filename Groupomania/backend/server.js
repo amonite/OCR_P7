@@ -1,17 +1,4 @@
-// const http = require("http");
-// const app = require("./app");
 
-// app.set("port", process.env.PORT || 5000);
-
-// const server = http.createServer(app);
-// // const server = http.createServer((req, res) =>{
-// //     res.end("Voila la réponse du server maj :)");
-
-// // });
-
-
-
-// server.listen(process.env.PORT || 5000);
 
 const http = require('http');
 const app = require('./app');

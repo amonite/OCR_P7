@@ -25,7 +25,7 @@ function SignInForm(){
         })
         .then(jsonResponse => jsonResponse.json())
         .then((res)=>{
-            //console.log(res.userId);
+            
             emailError.innerHTML = "";
             passwordError.innerHTML = "";
             if(res.message === "utilisateur non trouvé :/"){
@@ -36,13 +36,10 @@ function SignInForm(){
             }
             else{
                 
-                console.log("token : "+ res.token);
-                
                 sessionStorage.setItem("mytoken", JSON.stringify(res.token));
                 sessionStorage.setItem("userId", res.userId);
                 sessionStorage.setItem("userName", res.email)
                 
-                console.log("utilisateur connecté :)");
                 window.location = "/";
             }
             

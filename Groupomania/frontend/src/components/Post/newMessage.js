@@ -15,20 +15,17 @@ function NewMessage(props){
 
     const token = JSON.parse(sessionStorage.getItem("mytoken"));
 
-    // let userId = "";
-    // let isAdmin;
     let userName;
+
     if(token){
         const decodedToken = jwt_decode(token);
-        // userId = decodedToken.userId;
-        // isAdmin = decodedToken.isAdmin;
         userName = decodedToken.email;
     };
 
     function handleMessage(){
         
         const date = new Date();
-        console.log("img depuis handleMessage = ", img);
+        
         
         const postObject ={
             message:message,
@@ -44,15 +41,14 @@ function NewMessage(props){
             headers: {
 
                 "Authorization":"Bearer "+token,
-                //"Content-Type":"application/json"
-                //"Content-Type": "multipart/form-data"
+               
             },
             body:formData
            
         })
         .then(jsonResponse => jsonResponse.json())
         .then((res)=>{
-            console.log(res.message)
+            
             window.location = "/";
         })
         .catch(error => console.log("error = ", error));
@@ -67,11 +63,7 @@ function NewMessage(props){
                 <div id="message-form">
                 <form className="new-message-form">
                     <textarea 
-                        // style="width:100%;height:120px"
-
-                        name="message"
-                        // rows="12" 
-                        // cols="86" 
+                        name="message"                      
                         onChange={(e)=> {setMessage(e.target.value)}}
                         value={message}
                         >
@@ -96,7 +88,7 @@ function NewMessage(props){
                                 const fileSize = (size/1000).toFixed(2);
                                 const fileNameAndSize = `${fileName} - ${fileSize}KB`;
                                 document.querySelector(".file-name").textContent = fileNameAndSize;
-                                //setTimeout(function(){console.log("img = ", img)}, 1000); // debug
+                
                             }}
                         ></input>
                         <p className="file-name"></p>

@@ -3,7 +3,7 @@ import Nav from "../../components/Nav/nav"
 import NewMessage from "../../components/Post/newMessage";
 import ShowPosts from "../../components/Post/showPosts";
 import Footer from "../../components/Footer/footer";
-// import Header from "../../components/Header/header";
+
 
 
 function Home(){
@@ -21,7 +21,7 @@ function Home(){
 
     return(
         <div className="homeContainer">
-            {/* <Header /> */}
+            
             <Nav />
             <NewMessage isLoggedIn={islogged()} /> 
             <ShowPosts isLoggedIn={islogged()}/>

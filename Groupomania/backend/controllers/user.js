@@ -43,7 +43,7 @@ exports.signup = (req, res, next) =>{
                     .catch(error => res.status(500).json({error}));
             }
             else{
-                console.log("erreur mot de passe trop court")
+                
                 return res.status(400).json({message:"votre mot de passe ne convient pas"});
             };
             
@@ -55,7 +55,7 @@ exports.signup = (req, res, next) =>{
 
 
 exports.login = (req, res, next) =>{
-    //let token ="";
+    
     User.findOne({email:req.body.email})
         .then(user =>{
             if(!user){
@@ -67,25 +67,23 @@ exports.login = (req, res, next) =>{
                     if(!valid){
                         return res.status(400).json({message: "mot de passe incorect :/"});
                     }
-                    //token = jwt.sign({userId:user._id, isAdmin:user.isAdmin}, "THE_PCENGINE_RULEZ", {expiresIn:"24h"});
-                    //console.log(token);
-                    
+                 
                     res.status(200).json(
                         {
                             email: user.email,
                             userId: user._id,
-                            //token: "token"
-                             token: jwt.sign(
+                            
+                            token: jwt.sign(
                                  { 
                                     email: user.email,
                                     userId: user._id,
                                     isAdmin: user.isAdmin,
                                  },
                                  process.env.SECRET_PHRASE,
-                                 //"THE_PCENGINE_RULEZ",
+                                 
                                  {expiresIn: "24h"}
                             )
-                            //token: token 
+                            
                         }
                     );
                 }
@@ -98,6 +96,4 @@ exports.login = (req, res, next) =>{
         
 };
 
-// exports.logout = (req, res, next) =>{
-//     // remove token from localStorage 
-// }
+
